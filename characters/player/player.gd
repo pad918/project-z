@@ -1,19 +1,10 @@
 extends CharacterBody3D
 
-@export var camera: Camera3D
-@export var move_speed: float = 5.0
-@export var jump_force: float = 10.0
-@export var sprint_speed: float = 8.0
-@export var max_stamina: float = 100.0
-@export var stamina: float = max_stamina
-@export var stamina_regen_rate: float = 10.0
-@export var gravity: float = 25.0
-
-@onready var player: CharacterBody3D = $"." 
-@onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
-@onready var rotation_offset: Marker3D = $RotationOffset
 @onready var sprite_3d: Sprite3D = $RotationOffset/Sprite3D
 @onready var camera_3d: Camera3D = $RotationOffset/Sprite3D/Camera3D
+
+@export var move_speed: float = 13.0
+@export var gravity: float = 40.0
 
 var camera_offset: Vector3 = Vector3.ZERO
 
@@ -22,29 +13,61 @@ var wobble_amplitude: float = 0.05
 var wobble_speed: float = 8.0
 var wobble_timer: float = 0.0
 
+@export_category("Camera")
+@export var camera_near: float = 0.05
+@export var camera_size: float = 14.0
+@export var camera_far: float = 4000.0
+@export var camera_sprint_smooth: float = 8.0
+
+@export_category("Stamina")
+@export var max_stamina: float = 100.0
+@export var stamina: float = max_stamina
+@export var stamina_regen_rate: float = 10.0
+
 # Jump animation variables
+@export_category("Jump")
+@export var jump_force: float = 10.0
 var is_jumping: bool = false
 var jump_anim_timer: float = 0.0
 var jump_anim_duration: float = 0.3
 
 # Dash mechanic variables
-var is_dashing: bool = false
-@export var dash_force: float = 20.0
-@export var dash_duration: float = 0.2
+@export_category("Dash")
+@export var dash_force: float = 30.0
+@export var dash_duration: float = 0.1
 @export var dash_cooldown: float = 1.0
+var is_dashing: bool = false
 var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
 var dash_direction: Vector3 = Vector3.ZERO
 
+@export_category("Sprint")
+@export var double_press_threshold = 0.3
+@export var sprint_speed: float = 16.0
+var tap_elapsed_forward: float = 9999.0
+var tap_elapsed_backward: float = 9999.0
+var tap_elapsed_left: float = 9999.0
+var tap_elapsed_right: float = 9999.0
+var is_sprinting: bool = false
+
 func _unhandled_input(event: InputEvent) -> void:
+	#if event.is_action_pressed("exit"):
+		#get_tree().quit()
 	if event.is_action_pressed("exit"):
-		get_tree().quit()
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera_3d.top_level = true
 	camera_offset = camera_3d.global_position - global_position
 	sprite_3d.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
+
+	camera_3d.global_position = global_position + camera_offset
+	camera_3d.projection = Camera3D.PROJECTION_ORTHOGONAL
+	camera_3d.current = true
+	camera_3d.size = camera_size
+	camera_3d.near = camera_near
+	camera_3d.far = camera_far
 
 func _physics_process(delta: float) -> void:
 	var direction = Vector3.ZERO
@@ -58,19 +81,46 @@ func _physics_process(delta: float) -> void:
 		direction.x += 1
 
 	direction = direction.normalized()
+	if direction != Vector3.ZERO:
+		var cam_move = camera_3d.global_transform.basis * direction
+		cam_move.y = 0.0
+		direction = cam_move.normalized()
 
 	var is_moving = direction != Vector3.ZERO
 
-	# --- Sprint mechanic (commented out) ---
-	# var is_sprinting = is_moving and Input.is_action_pressed("move_sprint") and stamina > 0.0
-	# var speed = sprint_speed if is_sprinting else move_speed
-	# if is_sprinting:
-	#     stamina = max(stamina - stamina_regen_rate * delta, 0.0)
-	# else:
-	#     stamina = min(stamina + stamina_regen_rate * delta, max_stamina)
-	# ---------------------------------------
+	tap_elapsed_forward += delta
+	tap_elapsed_backward += delta
+	tap_elapsed_left += delta
+	tap_elapsed_right += delta
+	if Input.is_action_just_pressed("move_forward"):
+		if tap_elapsed_forward <= double_press_threshold:
+			is_sprinting = true
+		tap_elapsed_forward = 0.0
+	if Input.is_action_just_pressed("move_backward"):
+		if tap_elapsed_backward <= double_press_threshold:
+			is_sprinting = true
+		tap_elapsed_backward = 0.0
+	if Input.is_action_just_pressed("move_left"):
+		if tap_elapsed_left <= double_press_threshold:
+			is_sprinting = true
+		tap_elapsed_left = 0.0
+	if Input.is_action_just_pressed("move_right"):
+		if tap_elapsed_right <= double_press_threshold:
+			is_sprinting = true
+		tap_elapsed_right = 0.0
 
-	var speed = move_speed  # Default movement speed
+	var any_move_pressed = Input.is_action_pressed("move_forward") or Input.is_action_pressed("move_backward") or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")
+	if not any_move_pressed:
+		is_sprinting = false
+
+	if is_sprinting and is_moving and stamina > 0.0:
+		stamina = max(stamina - stamina_regen_rate * delta, 0.0)
+	else:
+		stamina = min(stamina + stamina_regen_rate * delta, max_stamina)
+	if stamina <= 0.0:
+		is_sprinting = false
+
+	var speed = sprint_speed if (is_sprinting and is_moving and stamina > 0.0) else move_speed
 	if dash_cooldown_timer > 0.0:
 		dash_cooldown_timer -= delta
 
@@ -120,6 +170,11 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	camera_3d.global_position = global_position + camera_offset
+	var cam_target_size = camera_size + 5.0 if (is_sprinting and is_moving and stamina > 0.0) else camera_size
+	var cam_target_far = camera_far + 5.0 if (is_sprinting and is_moving and stamina > 0.0) else camera_far
+	var cam_lerp_w = min(1.0, camera_sprint_smooth * delta)
+	camera_3d.size = lerp(camera_3d.size, cam_target_size, cam_lerp_w)
+	camera_3d.far = lerp(camera_3d.far, cam_target_far, cam_lerp_w)
 
 	if is_moving and is_on_floor() and not is_dashing:
 		wobble_timer += delta * wobble_speed

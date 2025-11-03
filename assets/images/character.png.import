@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brtb1vxub7tu4"
-path.s3tc="res://.godot/imported/prototyping-1.png-461c36d9f80d730fe98fc175fdf68cfc.s3tc.ctex"
+uid="uid://cnjahjxu5ngww"
+path.s3tc="res://.godot/imported/character.png-25a277295dadccd305be2c25adf30062.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/images/prototyping-1.png"
-dest_files=["res://.godot/imported/prototyping-1.png-461c36d9f80d730fe98fc175fdf68cfc.s3tc.ctex"]
+source_file="res://assets/images/character.png"
+dest_files=["res://.godot/imported/character.png-25a277295dadccd305be2c25adf30062.s3tc.ctex"]
 
 [params]
 

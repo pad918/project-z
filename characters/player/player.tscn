@@ -1,29 +1,30 @@
 [gd_scene load_steps=4 format=3 uid="uid://bepm5g1iijcre"]
 
-[ext_resource type="Texture2D" uid="uid://brtb1vxub7tu4" path="res://assets/images/prototyping-1.png" id="1_508ok"]
 [ext_resource type="Script" uid="uid://djjlls6v0a3tt" path="res://characters/player/player.gd" id="1_xxgcw"]
+[ext_resource type="Texture2D" uid="uid://cnjahjxu5ngww" path="res://assets/images/character.png" id="2_xxgcw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_508ok"]
-size = Vector3(3.5654297, 3.5855637, 3.5848846)
+size = Vector3(1.9204102, 2.8329144, 2.8519697)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera")]
+[node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_xxgcw")
-camera = NodePath("RotationOffset/Sprite3D/Camera3D")
+camera_size = 20.0
 dash_cooldown = 0.5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.47369576, 0.03885269, -0.028800488)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01629448, 0.0032548904, -0.013339043)
 shape = SubResource("BoxShape3D_508ok")
 
 [node name="RotationOffset" type="Marker3D" parent="."]
 
 [node name="Sprite3D" type="Sprite3D" parent="RotationOffset"]
 transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.70710677, 0, -0.70710677, 0.7071067, 0, 0, 0)
+pixel_size = 0.005
+billboard = 1
+no_depth_test = true
 alpha_cut = 2
-texture = ExtResource("1_508ok")
+texture = ExtResource("2_xxgcw")
 
 [node name="Camera3D" type="Camera3D" parent="RotationOffset/Sprite3D"]
 transform = Transform3D(1, 0, 0, 0, 0.9659259, -0.25881913, 0, 0.25881913, 0.9659259, 0, -6.6185665, 32.979412)
-projection = 1
-current = true
-size = 14.95
+size = 14.0

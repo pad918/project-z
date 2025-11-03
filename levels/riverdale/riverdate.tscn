@@ -33,6 +33,9 @@ material = SubResource("StandardMaterial3D_xf8tx")
 
 [node name="Player" parent="." instance=ExtResource("1_fw0vi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+move_speed = 8.0
+jump_force = 15.0
+sprint_speed = 10.0
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 0)
