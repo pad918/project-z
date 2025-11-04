@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dn0vni80x0405"]
+[gd_scene load_steps=8 format=3 uid="uid://dn0vni80x0405"]
 
-[ext_resource type="Script" path="res://characters/player/player.gd" id="1_xxgcw"]
+[ext_resource type="Script" uid="uid://djjlls6v0a3tt" path="res://characters/player/player.gd" id="1_xxgcw"]
+[ext_resource type="PackedScene" uid="uid://dsi3kjg0rfxxo" path="res://characters/player/player_slash.tscn" id="2_5dc8e"]
 [ext_resource type="Texture2D" uid="uid://cnjahjxu5ngww" path="res://assets/images/character.png" id="2_xxgcw"]
+[ext_resource type="Script" uid="uid://p5f5bttudgf6" path="res://utils/combat/attackable_body.gd" id="3_exd8k"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_508ok"]
 size = Vector3(1.9204102, 2.8329144, 2.8519697)
@@ -9,9 +11,14 @@ size = Vector3(1.9204102, 2.8329144, 2.8519697)
 [sub_resource type="ViewportTexture" id="ViewportTexture_xxgcw"]
 viewport_path = NodePath("CanvasLayer/SubViewport")
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5dc8e"]
+radius = 0.82373047
+height = 2.9016113
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_xxgcw")
 dash_cooldown = 0.5
+attack_scene = ExtResource("2_5dc8e")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01629448, 0.0032548904, -0.013339043)
@@ -66,3 +73,12 @@ offset_right = 50.0
 offset_bottom = 13.5
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="AttackableBody" type="Area3D" parent="."]
+script = ExtResource("3_exd8k")
+body_group = "player"
+metadata/_custom_type_script = "uid://p5f5bttudgf6"
+
+[node name="HitBox" type="CollisionShape3D" parent="AttackableBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.044067383, 0)
+shape = SubResource("CapsuleShape3D_5dc8e")

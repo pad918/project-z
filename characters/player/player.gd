@@ -45,11 +45,16 @@ var dash_direction: Vector3 = Vector3.ZERO
 @export var double_press_threshold = 0.3
 @export var sprint_speed: float = 16.0
 
+@export_category("Attack")
+@export var attack_scene: PackedScene
+@export var attack_delay: float = 1.0
+
 var tap_elapsed_forward: float = 9999.0
 var tap_elapsed_backward: float = 9999.0
 var tap_elapsed_left: float = 9999.0
 var tap_elapsed_right: float = 9999.0
 var is_sprinting: bool = false
+var tap_elapse_attack:float = 0
 
 func _unhandled_input(event: InputEvent) -> void:
 	#if event.is_action_pressed("exit"):
@@ -82,6 +87,7 @@ func _physics_process(delta: float) -> void:
 	tap_elapsed_backward += delta
 	tap_elapsed_left += delta
 	tap_elapsed_right += delta
+	tap_elapse_attack += delta
 	if Input.is_action_just_pressed("move_forward"):
 		if tap_elapsed_forward <= double_press_threshold:
 			is_sprinting = true
@@ -98,7 +104,11 @@ func _physics_process(delta: float) -> void:
 		if tap_elapsed_right <= double_press_threshold:
 			is_sprinting = true
 		tap_elapsed_right = 0.0
-
+	if Input.is_action_pressed("player_attack") and tap_elapse_attack>attack_delay:
+		print("ATTACKING!")
+		tap_elapse_attack = 0
+		add_child(attack_scene.instantiate())
+	
 	var any_move_pressed = Input.is_action_pressed("move_forward") or Input.is_action_pressed("move_backward") or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")
 	if not any_move_pressed:
 		is_sprinting = false
