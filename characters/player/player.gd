@@ -2,7 +2,9 @@ extends CharacterBody3D
 
 @onready var model: Sprite3D = $RotationOffset/Model
 @onready var camera: Camera3D = $RotationOffset/Camera3D
-@onready var healthbar: ProgressBar = $CanvasLayer/SubViewport/Healthbar/ProgressBar
+@onready var healthbar: ProgressBar = $Canvas/SubViewport/Healthbar/HealthProgressBar
+@onready var attackable_body: AttackableBody = $AttackableBody
+
 
 @export var move_speed: float = 13.0
 @export var gravity: float = 40.0
@@ -67,7 +69,7 @@ func _ready():
 	model.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
 	
 	healthbar.max_value = max_health
-	healthbar.value = health
+	
 
 func _physics_process(delta: float) -> void:
 	var direction = Vector3.ZERO
@@ -105,7 +107,6 @@ func _physics_process(delta: float) -> void:
 			is_sprinting = true
 		tap_elapsed_right = 0.0
 	if Input.is_action_pressed("player_attack") and tap_elapse_attack>attack_delay:
-		print("ATTACKING!")
 		tap_elapse_attack = 0
 		add_child(attack_scene.instantiate())
 	
@@ -180,12 +181,9 @@ func _physics_process(delta: float) -> void:
 			model.scale = Vector3(1.0, 0.9 + sin(t * PI) * 0.1, 1.0)
 	else:
 		model.scale = model.scale.lerp(Vector3.ONE, delta * 10.0)
-
-func _take_damage(amount: float) -> void:
-	health = max(health - amount, 0.0)
-	healthbar.value = health
-	if health <= 0.0:
-		_die()
+	
+	#Update the healthbar
+	healthbar.value = attackable_body.health
 
 func _die() -> void:
 	pass

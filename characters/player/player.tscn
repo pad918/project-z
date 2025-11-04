@@ -9,7 +9,7 @@
 size = Vector3(1.9204102, 2.8329144, 2.8519697)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_xxgcw"]
-viewport_path = NodePath("CanvasLayer/SubViewport")
+viewport_path = NodePath("Canvas/SubViewport")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5dc8e"]
 radius = 0.82373047
@@ -17,8 +17,11 @@ height = 2.9016113
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_xxgcw")
+max_health = 20.0
+health = 20.0
 dash_cooldown = 0.5
 attack_scene = ExtResource("2_5dc8e")
+attack_delay = 0.35
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01629448, 0.0032548904, -0.013339043)
@@ -45,13 +48,13 @@ no_depth_test = true
 alpha_cut = 2
 texture = SubResource("ViewportTexture_xxgcw")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="Canvas" type="CanvasLayer" parent="."]
 
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer"]
+[node name="SubViewport" type="SubViewport" parent="Canvas"]
 transparent_bg = true
 size = Vector2i(100, 100)
 
-[node name="Healthbar" type="Control" parent="CanvasLayer/SubViewport"]
+[node name="Healthbar" type="Control" parent="Canvas/SubViewport"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -59,8 +62,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/SubViewport/Healthbar"]
-custom_minimum_size = Vector2(100, 0)
+[node name="HealthProgressBar" type="ProgressBar" parent="Canvas/SubViewport/Healthbar"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -73,12 +76,16 @@ offset_right = 50.0
 offset_bottom = 13.5
 grow_horizontal = 2
 grow_vertical = 2
+max_value = 20.0
 
 [node name="AttackableBody" type="Area3D" parent="."]
 script = ExtResource("3_exd8k")
+health = 20.0
 body_group = "player"
 metadata/_custom_type_script = "uid://p5f5bttudgf6"
 
 [node name="HitBox" type="CollisionShape3D" parent="AttackableBody"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.044067383, 0)
 shape = SubResource("CapsuleShape3D_5dc8e")
+
+[connection signal="on_break" from="AttackableBody" to="." method="queue_free"]

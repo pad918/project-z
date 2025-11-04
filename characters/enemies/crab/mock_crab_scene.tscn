@@ -61,17 +61,5 @@ target_node = NodePath("../Player")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.238189, -2.1803517, 9.008687)
 target_node = NodePath("../Player")
 
-[node name="Crab4" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("1_o24i6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.460443, -5.887216, 15.749197)
-target_node = NodePath("../Player")
-
-[node name="Crab5" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("1_o24i6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1130238, -7.9228406, 17.344513)
-target_node = NodePath("../Player")
-
-[node name="Crab6" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("1_o24i6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.204404, -9.607582, 20.606739)
-target_node = NodePath("../Player")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.3882073, 0.9215721, 0, -0.9215721, 0.3882073, 0, 7.301201, 12.409823)
