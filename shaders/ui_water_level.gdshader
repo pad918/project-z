@@ -6,17 +6,27 @@ shader_type canvas_item;
 // - Put this on a TextureRect / Sprite whose rect defines the vertical bar
 //
 
+// Group: Level & Colors
+group_uniforms Level;
 uniform float level : hint_range(0.0,1.0) = 0.6; // fill fraction from bottom
 uniform vec4 shallow_color : source_color = vec4(0.45, 0.9, 1.0, 1.0); // top (light) color
 uniform vec4 deep_color    : source_color = vec4(0.02, 0.05, 0.6, 1.0); // bottom (dark) color
 
-// wave controls
+// Group: Wave
+group_uniforms Wave;
 uniform float wave_amp = 0.035;     // vertical wave amplitude (in UV space)
 uniform float wave_freq = 6.0;      // horizontal wave frequency
 uniform float wave_speed = 0.9;     // how fast the waves move
+uniform bool simple_wave = true;    // if true, use a minimal sine wave
+// optional external noise for wave shaping
+uniform sampler2D wave_noise_tex : hint_default_white, filter_linear_mipmap, repeat_enable;
+uniform bool use_wave_noise_texture = false;
+uniform float wave_noise_scale = 1.0;
+uniform float wave_noise_amp = 0.6;  // phase perturbation strength
 
-// foam controls
-uniform float foam_width = 0.03;         // thickness of foam band
+// Group: Foam
+group_uniforms Foam;
+uniform float foam_width = 0.03;         // thickness of foam band (vertical falloff depth)
 uniform float foam_strength = 1.0;       // foam brightness multiplier
 uniform float foam_noise_scale = 6.0;    // noise scale for foam texture
 uniform float foam_noise_amp = 0.6;      // noise amplitude for foam mask
@@ -24,6 +34,9 @@ uniform float foam_noise_amp = 0.6;      // noise amplitude for foam mask
 // optional external noise texture (allows authoring custom noise)
 uniform sampler2D foam_noise_tex : hint_default_white, filter_linear_mipmap, repeat_enable;
 uniform bool use_noise_texture = false;
+
+// end grouping
+group_uniforms;
 
 // small helper functions: value noise + fbm
 float hash(vec2 p){
@@ -60,18 +73,28 @@ void fragment(){
 	// level = 0 => y_line = 1.0 (no water); level = 1 => y_line = 0.0 (full)
 	float y_line = 1.0 - clamp(level, 0.0, 1.0);
 
-	// wave: multiple octaves via fbm for a natural crest line
-	float wave_base = fbm(vec2(uv.x * wave_freq, TIME * wave_speed));
-	// normalize to -1..1
-	wave_base = (wave_base - 0.5) * 2.0;
-	float wave = wave_base * wave_amp;
+	// Wave shape
+	float wave = 0.0;
+	if (simple_wave) {
+		float phase = uv.x * (2.0 * PI) * max(wave_freq, 0.01) + TIME * wave_speed;
+		if (use_wave_noise_texture) {
+			float wn = texture(wave_noise_tex, vec2(uv.x * wave_noise_scale + TIME * 0.02, 0.5)).r;
+			wn = (wn - 0.5) * 2.0; // -1..1
+			phase += wn * wave_noise_amp;
+		}
+		wave = sin(phase) * wave_amp;
+	} else {
+		// fallback: fbm-based crest
+		float wave_base = fbm(vec2(uv.x * wave_freq, TIME * wave_speed));
+		wave_base = (wave_base - 0.5) * 2.0; // normalize to -1..1
+		wave = wave_base * wave_amp;
+	}
 
 	// vertical position of the noisy/wavy top at this x
 	float top_y = y_line + wave;
 
-	// soften the top edge a bit so it blends nicely
-	float edge_smooth = clamp(foam_width * 0.6, 0.001, 0.1);
-	float water_mask = smoothstep(top_y - edge_smooth, top_y + edge_smooth, uv.y);
+	// crisp water boundary: inside water is 1, outside is 0 (no blur)
+	float water_mask = step(top_y, uv.y);
 	// water_mask = 1.0 for pixels below (i.e. "inside" the water), 0.0 for pixels above
 
 	// depth gradient tied to absolute container depth (top=0 → shallow, bottom=1 → deep)
@@ -92,11 +115,12 @@ void fragment(){
     // remap/clip to emphasize bright foam speckles only
     fnoise = clamp((fnoise - 0.45) * 2.5, 0.0, 1.0);
 
-	// foam proximity mask: hard band around the crest (crisp, no blur)
-	float foam_center = abs(uv.y - top_y);
-	float foam_band = step(foam_center, foam_width); // 1 inside band, 0 outside
-	// modulate with noise and only where water exists (so foam sits on the crest)
-	float foam_mask = foam_band * fnoise * foam_noise_amp * water_mask;
+	// Foam mask that blends downward only (inside water), no effect outside
+	float dy = uv.y - top_y;                    // positive only inside the water
+	float inside = step(0.0, dy);
+	// 1 at the crest, fading to 0 over foam_width downward
+	float foam_down = 1.0 - smoothstep(0.0, foam_width, dy);
+	float foam_mask = inside * foam_down * fnoise * foam_noise_amp * water_mask;
 
 	// white-only foam overlay (crisp); avoid pre-multiplying alpha to prevent dark artifacts
 	float foam_overlay = clamp(foam_mask * foam_strength, 0.0, 1.0);
