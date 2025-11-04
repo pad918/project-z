@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bepm5g1iijcre"]
+[gd_scene load_steps=6 format=3 uid="uid://bepm5g1iijcre"]
 
 [ext_resource type="Script" uid="uid://djjlls6v0a3tt" path="res://characters/player/player.gd" id="1_xxgcw"]
 [ext_resource type="Texture2D" uid="uid://cnjahjxu5ngww" path="res://assets/images/character.png" id="2_xxgcw"]
+[ext_resource type="AudioStream" uid="uid://d2bklm2cchc4q" path="res://assets/sounds/funky_pirates_game.mp3" id="3_exd8k"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_508ok"]
 size = Vector3(1.9204102, 2.8329144, 2.8519697)
@@ -66,3 +67,9 @@ offset_right = 50.0
 offset_bottom = 13.5
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_exd8k")
+attenuation_model = 2
+max_distance = 4096.0
+parameters/looping = true

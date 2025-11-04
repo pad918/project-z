@@ -1,14 +1,18 @@
 extends CharacterBody3D
 
 @onready var model: Sprite3D = $RotationOffset/Model
+@onready var camera: Camera3D = $RotationOffset/Camera3D
 @onready var healthbar: ProgressBar = $CanvasLayer/SubViewport/Healthbar/ProgressBar
 
 @export var move_speed: float = 13.0
 @export var gravity: float = 40.0
 
-# Wobble effect variables
-var wobble_amplitude: float = 0.05
-var wobble_speed: float = 8.0
+var camera_offset: Vector3 = Vector3.ZERO
+var base_camera_offset: Vector3 = Vector3.ZERO
+
+@export_category("Wobble")
+@export var wobble_amplitude: float = 0.05
+@export var wobble_speed: float = 8.0
 var wobble_timer: float = 0.0
 
 @export_category("Stats")
