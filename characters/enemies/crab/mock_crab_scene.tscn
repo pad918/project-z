@@ -84,10 +84,11 @@ target_node = NodePath("../Target")
 [node name="Target" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7036443, 0, -7.0466266)
 
-[node name="DamageArea" type="Area3D" parent="Target"]
+[node name="EnemyDamageArea" type="Area3D" parent="Target"]
 script = ExtResource("2_mwe5d")
+attackable_groups = Array[String](["enemy"])
 
-[node name="DamageHitbox" type="CollisionShape3D" parent="Target/DamageArea"]
+[node name="DamageHitbox" type="CollisionShape3D" parent="Target/EnemyDamageArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9370694, 0)
 shape = SubResource("SphereShape3D_o4ev1")
 

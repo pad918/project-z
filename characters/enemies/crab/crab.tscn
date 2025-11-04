@@ -30,7 +30,6 @@ next_state = NodePath("../OnShipState")
 script = ExtResource("3_ggo2l")
 nav_agent = NodePath("../../NavigationAgent3D")
 body = NodePath("../..")
-speed = 3.0
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.831331, 0)
@@ -45,6 +44,7 @@ shape = SubResource("CapsuleShape3D_pm1ix")
 
 [node name="AttackableBody" type="Area3D" parent="."]
 script = ExtResource("5_ae4w6")
+body_group = "enemy"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AttackableBody"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5733756, 0)
