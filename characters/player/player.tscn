@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://dn0vni80x0405"]
 
-[ext_resource type="Script" uid="uid://djjlls6v0a3tt" path="res://characters/player/player.gd" id="1_xxgcw"]
+[ext_resource type="Script" path="res://characters/player/player.gd" id="1_xxgcw"]
 [ext_resource type="Texture2D" uid="uid://cnjahjxu5ngww" path="res://assets/images/character.png" id="2_xxgcw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_508ok"]
-size = Vector3(1.9204102, 2.8329144, 2.8519697)
+size = Vector3(1.92041, 2.83291, 2.85197)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_xxgcw"]
 viewport_path = NodePath("CanvasLayer/SubViewport")
@@ -14,13 +14,13 @@ script = ExtResource("1_xxgcw")
 dash_cooldown = 0.5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01629448, 0.0032548904, -0.013339043)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0162945, 0.00325489, -0.013339)
 shape = SubResource("BoxShape3D_508ok")
 
 [node name="RotationOffset" type="Marker3D" parent="."]
 
 [node name="Model" type="Sprite3D" parent="RotationOffset"]
-transform = Transform3D(1, 0, 0, 0, 0.819152, 0.5735764, 0, -0.5735764, 0.819152, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 0, 0)
 pixel_size = 0.005
 billboard = 1
 no_depth_test = true
@@ -28,12 +28,12 @@ alpha_cut = 2
 texture = ExtResource("2_xxgcw")
 
 [node name="Camera3D" type="Camera3D" parent="RotationOffset/Model"]
-transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 16.000002)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
 fov = 50.0
 size = 14.0
 
 [node name="Healthbar" type="Sprite3D" parent="RotationOffset/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4142137, 1.4142137)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41421, 1.41421)
 billboard = 1
 no_depth_test = true
 alpha_cut = 2
