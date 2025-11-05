@@ -9,9 +9,6 @@ extends Resource
 
 class_name EnemyWaveEvent
 
-@export_category("Event Execution Time")
-@export var event_time: float = 0
-
 # Abstract method for event execution
 func execute(_wave_handler: EnemyWaveHandler):
 	pass
