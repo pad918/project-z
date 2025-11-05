@@ -12,17 +12,22 @@ class_name AttackableBody
 
 signal on_break
 
-signal on_hit(damage: float, knockback: float)
+signal on_hit(damage: float, knockback: Vector3)
 
-@export var health:float = 1 :
-	get: return health
-	set(new_health):
-		health = new_health
-		if(new_health<=0):
-			on_break.emit()
+@export var max_health := 1
 
 @export var body_group:String = ""
 
-func hit(damage: float, knockback: float):
+var health:float:
+	get: return health
+	set(new_health):
+		health = min(new_health, max_health)
+		if(new_health<=0):
+			on_break.emit()
+
+func _ready() -> void:
+	health = max_health
+
+func hit(damage: float, knockback: Vector3):
 	health -= damage
 	on_hit.emit(damage, knockback)
