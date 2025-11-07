@@ -6,8 +6,6 @@ extends Area3D
 #
 #	Set the collision mask of the area3d
 #	to determine what can hit it
-#
-
 class_name AttackableBody
 
 signal on_break
