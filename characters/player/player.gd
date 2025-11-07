@@ -62,13 +62,6 @@ var dash_direction: Vector3 = Vector3.ZERO
 @export var attack_delay: float = 1.0
 @export var slash_anim_lock: float = 0.45
 
-var tap_elapsed_forward: float = 9999.0
-var tap_elapsed_backward: float = 9999.0
-var tap_elapsed_left: float = 9999.0
-var tap_elapsed_right: float = 9999.0
-var is_sprinting: bool = false
-var tap_elapse_attack:float = 0
-
 # Prevent locomotion from instantly overriding one-shot animations (slash/roll)
 var anim_lock_time: float = 0.0
 
