@@ -1,8 +1,9 @@
 extends CharacterBody3D
 
-@onready var model: Sprite3D = $RotationOffset/Model/Sprite3D
+@onready var model: Sprite3D = $RotationOffset/SpineModel/Sprite3D
 @onready var camera: Camera3D = $RotationOffset/Camera3D
 @onready var attackable_body: AttackableBody = $AttackableBody
+@onready var player_animator: AnimationPlayer = $PlayerAnimator
 
 
 @export var move_speed: float = 13.0
@@ -20,6 +21,9 @@ var wobble_timer: float = 0.0
 @export var max_stamina: float = 100.0
 @export var stamina: float = max_stamina
 @export var stamina_regen_rate: float = 10.0
+
+@export_category("Interact")
+@export var repair_range: float = 2.5
 
 # Jump animation variables
 @export_category("Jump")
@@ -53,15 +57,25 @@ var tap_elapsed_right: float = 9999.0
 var is_sprinting: bool = false
 var tap_elapse_attack:float = 0
 
+# This is not called immidietly after attacking,
+# but is used by the animation player to add a 
+# slight delay. This is common in many games 
+# (heavy weapons in e.g. elden ring)
+func spawn_damage_area():
+	add_child(attack_scene.instantiate())
+
 func _unhandled_input(event: InputEvent) -> void:
 	#if event.is_action_pressed("exit"):
 		#get_tree().quit()
 	if event.is_action_pressed("exit"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	if event.is_action_pressed("repair"):
+		_attempt_repair()
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	model.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
+	player_animator.play("player_idle")
 	
 
 func _physics_process(delta: float) -> void:
@@ -101,7 +115,7 @@ func _physics_process(delta: float) -> void:
 		tap_elapsed_right = 0.0
 	if Input.is_action_pressed("player_attack") and tap_elapse_attack>attack_delay:
 		tap_elapse_attack = 0
-		add_child(attack_scene.instantiate())
+		player_animator.play("player_slash")
 	
 	var any_move_pressed = Input.is_action_pressed("move_forward") or Input.is_action_pressed("move_backward") or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")
 	if not any_move_pressed:
@@ -177,3 +191,21 @@ func _physics_process(delta: float) -> void:
 
 func _die() -> void:
 	pass
+
+func _attempt_repair() -> void:
+	var part = _find_repairable_ship_part()
+	if part != null:
+		part.repair()
+
+func _find_repairable_ship_part():
+	var nearest = null
+	var nearest_dist_sq := INF
+	for node in get_tree().get_nodes_in_group("ship_parts"):
+		if node is ShipPart:
+			var sp: ShipPart = node
+			if sp.collision_shape_3d.disabled or sp.mesh_instance_3d.visible:
+				var d := global_transform.origin.distance_squared_to(sp.global_transform.origin)
+				if d <= repair_range * repair_range and d < nearest_dist_sq:
+					nearest = sp
+					nearest_dist_sq = d
+	return nearest
