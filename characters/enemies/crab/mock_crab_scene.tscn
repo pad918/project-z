@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://x62cw4vdrs20"]
+[gd_scene load_steps=19 format=3 uid="uid://x62cw4vdrs20"]
 
 [ext_resource type="PackedScene" uid="uid://bpekosltikvao" path="res://characters/enemies/crab/crab.tscn" id="1_o24i6"]
 [ext_resource type="PackedScene" uid="uid://dn0vni80x0405" path="res://characters/player/player.tscn" id="1_sk15x"]
@@ -33,20 +33,49 @@ size = Vector3(5, 15, 5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ju2js"]
 size = Vector3(5, 15, 5)
 
-[sub_resource type="Resource" id="Resource_njm2q"]
+[sub_resource type="Resource" id="Resource_tq3bg"]
 script = ExtResource("6_mbuwf")
 spawner_scene = ExtResource("6_njm2q")
 enemy_scene = ExtResource("1_o24i6")
 spawn_delay = 1.5
-max_enemies_spawned = 2
+max_enemies_spawned = 3
+max_spawn_time = 10.0
 position_randomness = Vector3(8, 0, 0)
-max_enemies_randomness = 8
-spawn_delay_randomness = 1.0
+max_enemies_randomness = 1
+spawn_delay_randomness = 0.5
 metadata/_custom_type_script = "uid://6ix82m43o37x"
 
 [sub_resource type="Animation" id="Animation_ju2js"]
 resource_name = "wave1"
-length = 10.0
+length = 30.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WaveEventHandler")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [SubResource("Resource_tq3bg")],
+"method": &"execute_event"
+}]
+}
+
+[sub_resource type="Resource" id="Resource_njm2q"]
+script = ExtResource("6_mbuwf")
+spawner_scene = ExtResource("6_njm2q")
+enemy_scene = ExtResource("1_o24i6")
+spawn_delay = 0.5
+position_randomness = Vector3(8, 0, 0)
+max_enemies_randomness = 5
+spawn_delay_randomness = 0.2
+metadata/_custom_type_script = "uid://6ix82m43o37x"
+
+[sub_resource type="Animation" id="Animation_tq3bg"]
+resource_name = "wave2"
+length = 30.0
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -64,7 +93,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tq3bg"]
 _data = {
-&"wave1": SubResource("Animation_ju2js")
+&"wave1": SubResource("Animation_ju2js"),
+&"wave2": SubResource("Animation_tq3bg")
 }
 
 [node name="MockCrabScene" type="Node3D"]
@@ -138,9 +168,10 @@ transform = Transform3D(0.9555824, -0.11441409, -0.2716096, 0.2947242, 0.3709640
 [node name="WaveEventHandler" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -16.10834, 25.027397)
 script = ExtResource("3_sk15x")
+wave_names = Array[String](["wave1", "wave2"])
 
-[node name="WaveAnimator" type="AnimationPlayer" parent="."]
+[node name="WaveAnimator" type="AnimationPlayer" parent="WaveEventHandler"]
+root_node = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_tq3bg")
 }
-autoplay = "wave1"
