@@ -19,7 +19,7 @@ enum WaveSize {
 @export var direction: Vector3 = Vector3(1, 0, 0)
 @export var despawn_x: float = 120.0
 
-@export var attackable_groups: Array[String] = ["ship"]
+@export var attackable_groups: Array[String] = ["ship_parts"]
 
 func _ready():
 	match wave_size:

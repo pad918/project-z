@@ -52,7 +52,7 @@ shape = SubResource("ConvexPolygonShape3D_rlhmo")
 [node name="Part1" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.1140003, 0, 0, 0, 1, -2.5, -0.4, -5)
 script = ExtResource("2_vlt18")
-body_group = "ship"
+body_group = "ship_parts"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Part1"]
 transform = Transform3D(1, 0, 0, 0, 0.20000006, 0, 0, 0, 1, 0, 0.14846388, 0)
@@ -60,13 +60,12 @@ shape = SubResource("BoxShape3D_vlt18")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Part1"]
 transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, 0, -0.21938157, 0)
-visible = false
 mesh = SubResource("PlaneMesh_x6ult")
 
 [node name="Part2" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.1140003, 0, 0, 0, 1, -2.5, -0.4, 0)
 script = ExtResource("2_vlt18")
-body_group = "ship"
+body_group = "ship_parts"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Part2"]
 transform = Transform3D(1, 0, 0, 0, 0.20000006, 0, 0, 0, 1, 0, 0.14846388, 0)
@@ -74,14 +73,13 @@ shape = SubResource("BoxShape3D_vlt18")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Part2"]
 transform = Transform3D(0.9999999, 0, 0, 0, -0.9999999, -8.742276e-08, 0, 8.742277e-08, -0.9999999, 0, -0.21938145, -1.589457e-07)
-visible = false
 mesh = SubResource("PlaneMesh_x6ult")
 skeleton = NodePath("../../Part1")
 
 [node name="Part3" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.1140003, 0, 0, 0, 1, -2.5, -0.4, 5)
 script = ExtResource("2_vlt18")
-body_group = "ship"
+body_group = "ship_parts"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Part3"]
 transform = Transform3D(1, 0, 0, 0, 0.20000006, 0, 0, 0, 1, 0, 0.14846388, 0)
@@ -89,14 +87,13 @@ shape = SubResource("BoxShape3D_vlt18")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Part3"]
 transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, 0, -0.21938133, 0)
-visible = false
 mesh = SubResource("PlaneMesh_vlt18")
 skeleton = NodePath("../../Part1")
 
 [node name="Part4" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.1140003, 0, 0, 0, 1, 2.5, -0.4, -5)
 script = ExtResource("2_vlt18")
-body_group = "ship"
+body_group = "ship_parts"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Part4"]
 transform = Transform3D(1, 0, 0, 0, 0.20000006, 0, 0, 0, 1, 0, 0.14846388, 0)
@@ -104,13 +101,12 @@ shape = SubResource("BoxShape3D_vlt18")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Part4"]
 transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, 0, -0.21938157, 0)
-visible = false
 mesh = SubResource("PlaneMesh_x6ult")
 
 [node name="Part5" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.1140003, 0, 0, 0, 1, 2.5, -0.4, 0)
 script = ExtResource("2_vlt18")
-body_group = "ship"
+body_group = "ship_parts"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Part5"]
 transform = Transform3D(1, 0, 0, 0, 0.20000006, 0, 0, 0, 1, 0, 0.14846388, 0)
@@ -118,14 +114,13 @@ shape = SubResource("BoxShape3D_vlt18")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Part5"]
 transform = Transform3D(0.9999999, 0, 0, 0, -0.9999999, -8.742276e-08, 0, 8.742277e-08, -0.9999999, 0, -0.21938145, -1.589457e-07)
-visible = false
 mesh = SubResource("PlaneMesh_x6ult")
 skeleton = NodePath("../../Part1")
 
 [node name="Part6" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.1140003, 0, 0, 0, 1, 2.5, -0.4, 5)
 script = ExtResource("2_vlt18")
-body_group = "ship"
+body_group = "ship_parts"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Part6"]
 transform = Transform3D(1, 0, 0, 0, 0.20000006, 0, 0, 0, 1, 0, 0.14846388, 0)
@@ -133,7 +128,6 @@ shape = SubResource("BoxShape3D_vlt18")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Part6"]
 transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, 0, -0.21938133, 0)
-visible = false
 mesh = SubResource("PlaneMesh_vlt18")
 skeleton = NodePath("../../Part1")
 

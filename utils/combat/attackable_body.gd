@@ -10,7 +10,7 @@ class_name AttackableBody
 
 signal on_break
 
-signal on_hit(damage: float, knockback: Vector3)
+signal on_hit(damage: float, knockback: float)
 
 @export var max_health := 1
 
@@ -21,11 +21,12 @@ var health:float:
 	set(new_health):
 		health = min(new_health, max_health)
 		if(new_health<=0):
+			print("attackable body broke: ", name, " health: ", health, " max_health: ", max_health, " new_health: ", new_health)
 			on_break.emit()
 
 func _ready() -> void:
 	health = max_health
 
-func hit(damage: float, knockback: Vector3):
+func hit(damage: float, knockback: float):
 	health -= damage
 	on_hit.emit(damage, knockback)
