@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+class_name Player
+
 @onready var model: Sprite3D = $RotationOffset/SpineModel/Sprite3D
 @onready var camera: Camera3D = $RotationOffset/Camera3D
 @onready var attackable_body: AttackableBody = $AttackableBody
@@ -209,3 +211,6 @@ func _find_repairable_ship_part():
 					nearest = sp
 					nearest_dist_sq = d
 	return nearest
+	
+func heal_player():
+	attackable_body.health = attackable_body.max_health

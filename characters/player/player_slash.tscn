@@ -11,7 +11,7 @@ size = Vector2(5, 5)
 orientation = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_afhrm"]
-size = Vector3(5, 1, 5)
+size = Vector3(6, 3.411, 6)
 
 [node name="PlayerSlash" type="Node3D"]
 
@@ -21,11 +21,12 @@ mesh = SubResource("QuadMesh_ra5s5")
 
 [node name="DamageArea" type="Area3D" parent="."]
 script = ExtResource("1_f1vjc")
-base_knockback = 4.0
+base_knockback = 12.0
 attackable_groups = Array[String](["enemy"])
 metadata/_custom_type_script = "uid://dshalxabrsdqb"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DamageArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12181091, 0)
 shape = SubResource("BoxShape3D_afhrm")
 
 [node name="DestructionTimer" type="Timer" parent="."]
