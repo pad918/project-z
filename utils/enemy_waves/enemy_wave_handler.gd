@@ -24,11 +24,18 @@ func kill_all_spawned_nodes():
 		if(child != wave_animator):
 			child.queue_free()
 
+func _heal_players():
+	var players := get_tree().get_nodes_in_group("players")
+	for p in players:
+		if(p is Player):
+			p.heal_player()
+
 func play_wave(wave_num:int):
 	assert(wave_num < wave_names.size())
 	kill_all_spawned_nodes()
 	var animation_name := wave_names[wave_num]
 	wave_animator.play(animation_name)
+	_heal_players()
 	print("Playing wave: ", animation_name)
 	
 func play_next_wave():
