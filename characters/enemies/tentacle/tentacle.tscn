@@ -1,0 +1,174 @@
+[gd_scene load_steps=8 format=3 uid="uid://6qjfsaowjrd1"]
+
+[ext_resource type="Script" uid="uid://lithisbfxk0k" path="res://characters/enemies/tentacle/tentacle_animator.gd" id="1_pd1rg"]
+[ext_resource type="Script" uid="uid://djnyrj1ci42m7" path="res://characters/enemies/tentacle/chain_part.gd" id="2_g7k4g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g7k4g"]
+albedo_color = Color(0.69411767, 0.101960786, 0.07058824, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_g7k4g"]
+material = SubResource("StandardMaterial3D_g7k4g")
+size = Vector2(2, 6)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pd1rg"]
+radius = 0.705
+height = 5.9264984
+
+[sub_resource type="QuadMesh" id="QuadMesh_y1gch"]
+material = SubResource("StandardMaterial3D_g7k4g")
+size = Vector2(1.7, 6)
+
+[sub_resource type="QuadMesh" id="QuadMesh_1nt4d"]
+material = SubResource("StandardMaterial3D_g7k4g")
+size = Vector2(1.5, 6)
+
+[node name="Tentacle" type="Node3D"]
+
+[node name="PartChain" type="Node3D" parent="."]
+script = ExtResource("1_pd1rg")
+
+[node name="ChainPart" type="RigidBody3D" parent="PartChain"]
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource("2_g7k4g")
+strength = 200.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PartChain/ChainPart"]
+mesh = SubResource("QuadMesh_g7k4g")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PartChain/ChainPart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2700988e-09, 0.024566637, 0)
+shape = SubResource("CapsuleShape3D_pd1rg")
+
+[node name="PinJoint3D" type="HingeJoint3D" parent="PartChain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.100132, 0)
+node_a = NodePath("../ChainPart")
+node_b = NodePath("../ChainPart2")
+params/bias = 0.5
+angular_limit/enable = true
+angular_limit/upper = 0.87266463
+angular_limit/lower = -0.87266463
+angular_limit/bias = 0.55
+angular_limit/relaxation = 1.25
+
+[node name="ChainPart2" type="RigidBody3D" parent="PartChain" node_paths=PackedStringArray("previous_link")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.1374927, 0)
+script = ExtResource("2_g7k4g")
+strength = 200.0
+previous_link = NodePath("../ChainPart")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PartChain/ChainPart2"]
+mesh = SubResource("QuadMesh_y1gch")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PartChain/ChainPart2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2700988e-09, 0.024566637, 0)
+shape = SubResource("CapsuleShape3D_pd1rg")
+
+[node name="PinJoint3D2" type="HingeJoint3D" parent="PartChain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.363884, 0)
+node_a = NodePath("../ChainPart2")
+node_b = NodePath("../ChainPart3")
+params/bias = 0.5
+angular_limit/enable = true
+angular_limit/upper = 0.87266463
+angular_limit/lower = -0.87266463
+angular_limit/bias = 0.55
+angular_limit/relaxation = 1.25
+
+[node name="ChainPart3" type="RigidBody3D" parent="PartChain" node_paths=PackedStringArray("previous_link")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.373255, 0)
+script = ExtResource("2_g7k4g")
+strength = 200.0
+previous_link = NodePath("../ChainPart2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PartChain/ChainPart3"]
+mesh = SubResource("QuadMesh_1nt4d")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PartChain/ChainPart3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2700988e-09, 0.024566637, 0)
+shape = SubResource("CapsuleShape3D_pd1rg")
+
+[node name="PinJoint3D3" type="HingeJoint3D" parent="PartChain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.568079, 0)
+node_a = NodePath("../ChainPart3")
+node_b = NodePath("../ChainPart4")
+params/bias = 0.5
+angular_limit/enable = true
+angular_limit/upper = 0.87266463
+angular_limit/lower = -0.87266463
+angular_limit/bias = 0.55
+angular_limit/relaxation = 1.25
+
+[node name="ChainPart4" type="RigidBody3D" parent="PartChain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.550173, 0)
+script = ExtResource("2_g7k4g")
+strength = 200.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PartChain/ChainPart4"]
+mesh = SubResource("QuadMesh_1nt4d")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PartChain/ChainPart4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2700988e-09, 0.024566637, 0)
+shape = SubResource("CapsuleShape3D_pd1rg")
+
+[node name="PinJoint3D4" type="HingeJoint3D" parent="PartChain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21.650305, 0)
+node_a = NodePath("../ChainPart4")
+node_b = NodePath("../ChainPart5")
+params/bias = 0.5
+angular_limit/enable = true
+angular_limit/upper = 0.87266463
+angular_limit/lower = -0.87266463
+angular_limit/bias = 0.55
+angular_limit/relaxation = 1.25
+
+[node name="ChainPart5" type="RigidBody3D" parent="PartChain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.643005, 0)
+script = ExtResource("2_g7k4g")
+strength = 200.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PartChain/ChainPart5"]
+mesh = SubResource("QuadMesh_1nt4d")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PartChain/ChainPart5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2700988e-09, 0.024566637, 0)
+shape = SubResource("CapsuleShape3D_pd1rg")
+
+[node name="PinJoint3D5" type="HingeJoint3D" parent="PartChain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27.74314, 0)
+node_a = NodePath("../ChainPart5")
+node_b = NodePath("../ChainPart6")
+params/bias = 0.5
+angular_limit/enable = true
+angular_limit/upper = 0.87266463
+angular_limit/lower = -0.87266463
+angular_limit/bias = 0.55
+angular_limit/relaxation = 1.25
+
+[node name="ChainPart6" type="RigidBody3D" parent="PartChain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30.862097, 0)
+script = ExtResource("2_g7k4g")
+strength = 200.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PartChain/ChainPart6"]
+mesh = SubResource("QuadMesh_1nt4d")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PartChain/ChainPart6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2700988e-09, 0.0056533813, 0)
+shape = SubResource("CapsuleShape3D_pd1rg")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.093988, 25.168703)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9354194, 0.35354018, 0, -0.35354018, 0.9354194, 0, 1.5515014, 1.2140194)
