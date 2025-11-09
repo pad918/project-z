@@ -81,7 +81,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	model.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
-	player_animator.play("player_idle")
+	player_animator.play("player_dance")
 	hp = max_hp
 	
 
@@ -122,6 +122,7 @@ func _physics_process(delta: float) -> void:
 		tap_elapsed_right = 0.0
 	if Input.is_action_pressed("player_attack") and tap_elapse_attack>attack_delay:
 		tap_elapse_attack = 0
+		player_animator.stop()
 		player_animator.play("player_slash")
 	
 	var any_move_pressed = Input.is_action_pressed("move_forward") or Input.is_action_pressed("move_backward") or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")
@@ -149,6 +150,8 @@ func _physics_process(delta: float) -> void:
 			dash_cooldown_timer = dash_cooldown
 	else:
 		if Input.is_action_just_pressed("move_dash") and is_moving and dash_cooldown_timer <= 0.0:
+			player_animator.play("player_roll")
+			player_animator.queue("player_dance")
 			is_dashing = true
 			dash_timer = dash_duration
 			dash_direction = direction
