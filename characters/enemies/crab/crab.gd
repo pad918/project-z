@@ -1,8 +1,12 @@
-extends CharacterBody3D
+extends Enemy
 
 @onready var walk_state: EnemyOnShipState = $MovementStateHandler/walkTowardsPlayerState
 
 var target_node:Node3D
+var hp:float
+
+func _ready() -> void:
+	hp = max_hp
 
 func knockback(_damage:float, dir: Vector3):
 	velocity += dir
@@ -21,3 +25,10 @@ func _physics_process(_delta: float) -> void:
 	if(target_node is Node3D):
 		walk_state.set_target(target_node.global_position)
 	move_and_slide()
+
+func take_damage(amount: float):
+	print("Crab got hit!")
+	hp -= amount
+	if(hp <= 0):
+		print("Crab died")
+		queue_free()
