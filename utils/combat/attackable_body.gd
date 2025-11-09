@@ -16,7 +16,7 @@ func _ready() -> void:
 	# Crashing as early as possible makes
 	# debugging easier!
 	assert(owner_entity)
-	assert(owner.has_method("take_damage"))
+	assert(owner_entity.has_method("take_damage"))
 
 # TODO, if we include the object that hit the entity
 # in the take_damage function, we can define how the
