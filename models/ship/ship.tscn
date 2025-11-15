@@ -1,5 +1,6 @@
-[gd_scene load_steps=38 format=3 uid="uid://xqygc3dedr2h"]
+[gd_scene load_steps=39 format=3 uid="uid://xqygc3dedr2h"]
 
+[ext_resource type="Script" uid="uid://balv0l6v488m" path="res://models/ship/ship_collider.gd" id="1_557hb"]
 [ext_resource type="Texture2D" uid="uid://dihqewgemastu" path="res://models/ship/Meshes/rear.png" id="1_a0fk5"]
 [ext_resource type="ArrayMesh" uid="uid://dck2l0doi2eng" path="res://models/ship/Meshes/rear.obj" id="1_lugwd"]
 [ext_resource type="Texture2D" uid="uid://1377agvujnr3" path="res://models/ship/Meshes/shipbow.png" id="1_nib4r"]
@@ -90,6 +91,7 @@ size = Vector3(25, 7.5, 2.5)
 navigation_mesh = SubResource("NavigationMesh_oygni")
 
 [node name="Bow" type="StaticBody3D" parent="NavigationRegion"]
+script = ExtResource("1_557hb")
 
 [node name="bowMesh" type="MeshInstance3D" parent="NavigationRegion/Bow"]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.36415672, -3.6861901, -13.084852)
@@ -108,6 +110,7 @@ mesh = ExtResource("1_lugwd")
 skeleton = NodePath("../StaticBody3D")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion"]
+script = ExtResource("1_557hb")
 
 [node name="FloorCollider" type="CollisionShape3D" parent="NavigationRegion/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4936905, 0.20870972, -1.042553)
@@ -119,6 +122,7 @@ shape = SubResource("BoxShape3D_oygni")
 
 [node name="Rail" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -10.775954, 0.91006374, 12.117037)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -130,6 +134,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Rail5" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 10.201979, 0.91006374, 12.117037)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail5"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -141,6 +146,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Rail6" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 10.201979, 0.91006374, 3.1175308)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail6"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -152,6 +158,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Rail7" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 10.201979, 0.91006374, -5.9288683)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail7"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -163,6 +170,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Rail8" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-0.3586124, 0, 0.93348664, 0, 1, 0, -0.93348664, 0, -0.3586124, 8.85512, 0.91006374, -16.478313)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail8"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -174,6 +182,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Rail2" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -10.775954, 0.91006374, 3.0530481)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail2"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -185,6 +194,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Rail3" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -10.775954, 0.91006374, -6.397539)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail3"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -196,6 +206,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Rail4" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-0.3732307, 0, -0.92773855, 0, 1, 0, 0.92773855, 0, -0.3732307, -9.291687, 0.91006374, -16.421925)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail4"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -207,6 +218,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Wheel" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9.718244)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Wheel"]
 transform = Transform3D(-4.3711385e-08, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, -4.3711385e-08, 0, 0, -0.86171055)
@@ -219,6 +231,7 @@ shape = SubResource("BoxShape3D_ib3tc")
 
 [node name="Box" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(0.50577784, 0, -0.86266375, 0, 1, 0, 0.86266375, 0, 0.50577784, -8.154509, 0, 11.372591)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Box"]
 material_override = SubResource("StandardMaterial3D_3xbsa")
@@ -230,6 +243,7 @@ shape = SubResource("BoxShape3D_evq1r")
 
 [node name="Box3" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-0.8621102, 0, -0.6912242, 0, 1.1049999, 0, 0.6912242, 0, -0.8621102, 7.6615133, 0, 11.372591)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Box3"]
 material_override = SubResource("StandardMaterial3D_3xbsa")
@@ -241,6 +255,7 @@ shape = SubResource("BoxShape3D_evq1r")
 
 [node name="Box5" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-1.0397254, 0, -0.3741603, 0, 1.1049998, 0, 0.3741603, 0, -1.0397254, 7.6615133, 0, -12.250601)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Box5"]
 material_override = SubResource("StandardMaterial3D_3xbsa")
@@ -252,6 +267,7 @@ shape = SubResource("BoxShape3D_evq1r")
 
 [node name="Box6" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-0.26375154, 0, -0.9126528, 0, 0.95, 0, 0.9126528, 0, -0.26375154, -7.859824, 0, -14.403229)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Box6"]
 material_override = SubResource("StandardMaterial3D_3xbsa")
@@ -263,6 +279,7 @@ shape = SubResource("BoxShape3D_evq1r")
 
 [node name="Box4" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-0.3522684, 0, -0.7900201, 0, 0.86499995, 0, 0.7900201, 0, -0.3522684, 7.6615133, 0, 8.318424)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Box4"]
 material_override = SubResource("StandardMaterial3D_3xbsa")
@@ -274,6 +291,7 @@ shape = SubResource("BoxShape3D_evq1r")
 
 [node name="Box2" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-0.16430365, 0, -0.8950443, 0, 0.91, 0, 0.8950443, 0, -0.16430365, -8.165873, 0, 6.756115)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Box2"]
 material_override = SubResource("StandardMaterial3D_3xbsa")
