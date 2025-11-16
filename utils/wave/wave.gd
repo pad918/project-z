@@ -60,6 +60,7 @@ func _spawn_wave() -> void:
 	if wave_scene == null:
 		return
 	var wave: Node3D = wave_scene.instantiate()
+	add_child(wave)
 	var z := _rng.randf_range(spawn_z_range.x, spawn_z_range.y)
 
 	# Ensure we have a player reference; attempt to find if missing
@@ -93,7 +94,7 @@ func _spawn_wave() -> void:
 	wave.set("direction", direction_vec)
 	wave.set("despawn_x", despawn_boundary_x)
 	
-	add_child(wave)
+	
 	_spawned_total += 1
 	
 	# Connect signals if available

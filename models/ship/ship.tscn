@@ -1,5 +1,6 @@
-[gd_scene load_steps=38 format=3 uid="uid://xqygc3dedr2h"]
+[gd_scene load_steps=46 format=3 uid="uid://xqygc3dedr2h"]
 
+[ext_resource type="Script" uid="uid://balv0l6v488m" path="res://models/ship/ship_collider.gd" id="1_557hb"]
 [ext_resource type="Texture2D" uid="uid://dihqewgemastu" path="res://models/ship/Meshes/rear.png" id="1_a0fk5"]
 [ext_resource type="ArrayMesh" uid="uid://dck2l0doi2eng" path="res://models/ship/Meshes/rear.obj" id="1_lugwd"]
 [ext_resource type="Texture2D" uid="uid://1377agvujnr3" path="res://models/ship/Meshes/shipbow.png" id="1_nib4r"]
@@ -17,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://dv8hvaijykgp4" path="res://models/ship/Meshes/Wheel.png" id="7_wu6fv"]
 [ext_resource type="Texture2D" uid="uid://dhsbkqrthg21s" path="res://models/ship/Meshes/Box.png" id="9_evq1r"]
 [ext_resource type="ArrayMesh" uid="uid://b5ovpp250djs0" path="res://models/ship/Meshes/box.obj" id="9_ib3tc"]
+[ext_resource type="PackedScene" uid="uid://fiv72rsrl2om" path="res://utils/combat/healthbar.tscn" id="13_1um6f"]
 [ext_resource type="Script" uid="uid://p5f5bttudgf6" path="res://utils/combat/attackable_body.gd" id="15_3xbsa"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_oygni"]
@@ -60,6 +62,9 @@ albedo_texture = ExtResource("9_evq1r")
 [sub_resource type="BoxShape3D" id="BoxShape3D_evq1r"]
 size = Vector3(2.3166504, 4.0150146, 2.588066)
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_1um6f"]
+viewport_path = NodePath("ShipPart1/HpBar/AttackableBodyHealthbar")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lugwd"]
 albedo_texture = ExtResource("2_lugwd")
 
@@ -69,11 +74,26 @@ albedo_texture = ExtResource("4_pkdwe")
 [sub_resource type="BoxShape3D" id="BoxShape3D_3xbsa"]
 size = Vector3(8.946011, 8.985352, 11.297394)
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_ye8dv"]
+viewport_path = NodePath("ShipPart2/HpBar/AttackableBodyHealthbar")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkdwe"]
 albedo_texture = ExtResource("7_a0fk5")
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_2r617"]
+viewport_path = NodePath("ShipPart3/HpBar/AttackableBodyHealthbar")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_c4yja"]
+viewport_path = NodePath("ShipPart4/HpBar/AttackableBodyHealthbar")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nib4r"]
 albedo_texture = ExtResource("7_a0fk5")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_clyjn"]
+viewport_path = NodePath("ShipPart5/HpBar/AttackableBodyHealthbar")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_22w36"]
+viewport_path = NodePath("ShipPart6/HpBar/AttackableBodyHealthbar")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rlhmo"]
 albedo_texture = ExtResource("3_rlhmo")
@@ -90,6 +110,7 @@ size = Vector3(25, 7.5, 2.5)
 navigation_mesh = SubResource("NavigationMesh_oygni")
 
 [node name="Bow" type="StaticBody3D" parent="NavigationRegion"]
+script = ExtResource("1_557hb")
 
 [node name="bowMesh" type="MeshInstance3D" parent="NavigationRegion/Bow"]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.36415672, -3.6861901, -13.084852)
@@ -108,6 +129,7 @@ mesh = ExtResource("1_lugwd")
 skeleton = NodePath("../StaticBody3D")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion"]
+script = ExtResource("1_557hb")
 
 [node name="FloorCollider" type="CollisionShape3D" parent="NavigationRegion/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4936905, 0.20870972, -1.042553)
@@ -119,6 +141,7 @@ shape = SubResource("BoxShape3D_oygni")
 
 [node name="Rail" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -10.775954, 0.91006374, 12.117037)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -130,6 +153,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Rail5" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 10.201979, 0.91006374, 12.117037)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail5"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -141,6 +165,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Rail6" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 10.201979, 0.91006374, 3.1175308)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail6"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -152,6 +177,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Rail7" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 10.201979, 0.91006374, -5.9288683)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail7"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -163,6 +189,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Rail8" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-0.3586124, 0, 0.93348664, 0, 1, 0, -0.93348664, 0, -0.3586124, 8.85512, 0.91006374, -16.478313)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail8"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -174,6 +201,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Rail2" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -10.775954, 0.91006374, 3.0530481)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail2"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -185,6 +213,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Rail3" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -10.775954, 0.91006374, -6.397539)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail3"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -196,6 +225,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Rail4" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-0.3732307, 0, -0.92773855, 0, 1, 0, 0.92773855, 0, -0.3732307, -9.291687, 0.91006374, -16.421925)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Rail4"]
 material_override = SubResource("StandardMaterial3D_b2l48")
@@ -207,6 +237,7 @@ shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Wheel" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9.718244)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Wheel"]
 transform = Transform3D(-4.3711385e-08, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, -4.3711385e-08, 0, 0, -0.86171055)
@@ -219,6 +250,7 @@ shape = SubResource("BoxShape3D_ib3tc")
 
 [node name="Box" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(0.50577784, 0, -0.86266375, 0, 1, 0, 0.86266375, 0, 0.50577784, -8.154509, 0, 11.372591)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Box"]
 material_override = SubResource("StandardMaterial3D_3xbsa")
@@ -230,6 +262,7 @@ shape = SubResource("BoxShape3D_evq1r")
 
 [node name="Box3" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-0.8621102, 0, -0.6912242, 0, 1.1049999, 0, 0.6912242, 0, -0.8621102, 7.6615133, 0, 11.372591)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Box3"]
 material_override = SubResource("StandardMaterial3D_3xbsa")
@@ -241,6 +274,7 @@ shape = SubResource("BoxShape3D_evq1r")
 
 [node name="Box5" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-1.0397254, 0, -0.3741603, 0, 1.1049998, 0, 0.3741603, 0, -1.0397254, 7.6615133, 0, -12.250601)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Box5"]
 material_override = SubResource("StandardMaterial3D_3xbsa")
@@ -252,6 +286,7 @@ shape = SubResource("BoxShape3D_evq1r")
 
 [node name="Box6" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-0.26375154, 0, -0.9126528, 0, 0.95, 0, 0.9126528, 0, -0.26375154, -7.859824, 0, -14.403229)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Box6"]
 material_override = SubResource("StandardMaterial3D_3xbsa")
@@ -263,6 +298,7 @@ shape = SubResource("BoxShape3D_evq1r")
 
 [node name="Box4" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-0.3522684, 0, -0.7900201, 0, 0.86499995, 0, 0.7900201, 0, -0.3522684, 7.6615133, 0, 8.318424)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Box4"]
 material_override = SubResource("StandardMaterial3D_3xbsa")
@@ -274,6 +310,7 @@ shape = SubResource("BoxShape3D_evq1r")
 
 [node name="Box2" type="StaticBody3D" parent="NavigationRegion"]
 transform = Transform3D(-0.16430365, 0, -0.8950443, 0, 0.91, 0, 0.8950443, 0, -0.16430365, -8.165873, 0, 6.756115)
+script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Box2"]
 material_override = SubResource("StandardMaterial3D_3xbsa")
@@ -286,6 +323,17 @@ shape = SubResource("BoxShape3D_evq1r")
 [node name="ShipPart1" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -6.25, -0.4, -12.466971)
 script = ExtResource("2_vlt18")
+max_hp = 10
+
+[node name="HpBar" type="Sprite3D" parent="ShipPart1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3131304, 0)
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_1um6f")
+
+[node name="AttackableBodyHealthbar" parent="ShipPart1/HpBar" instance=ExtResource("13_1um6f")]
+health_entity_path = NodePath("../..")
+hide_on_full_hp = true
 
 [node name="PlankType1" type="MeshInstance3D" parent="ShipPart1"]
 transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, -0.19247818, 0.22649422, -0.18516445)
@@ -310,6 +358,7 @@ shape = SubResource("BoxShape3D_3xbsa")
 [node name="ShipPart2" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -6.25, -0.4, -1.1781883)
 script = ExtResource("2_vlt18")
+max_hp = 10
 
 [node name="AttackableBody" type="Area3D" parent="ShipPart2"]
 script = ExtResource("15_3xbsa")
@@ -331,9 +380,20 @@ transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, 
 material_override = SubResource("StandardMaterial3D_a0fk5")
 mesh = ExtResource("3_a0fk5")
 
+[node name="HpBar" type="Sprite3D" parent="ShipPart2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3131304, 0)
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_ye8dv")
+
+[node name="AttackableBodyHealthbar" parent="ShipPart2/HpBar" instance=ExtResource("13_1um6f")]
+health_entity_path = NodePath("../..")
+hide_on_full_hp = true
+
 [node name="ShipPart3" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -6.25, -0.4, 10.196731)
 script = ExtResource("2_vlt18")
+max_hp = 10
 
 [node name="AttackableBody" type="Area3D" parent="ShipPart3"]
 script = ExtResource("15_3xbsa")
@@ -355,9 +415,20 @@ transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, 
 material_override = SubResource("StandardMaterial3D_a0fk5")
 mesh = ExtResource("3_a0fk5")
 
+[node name="HpBar" type="Sprite3D" parent="ShipPart3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3131304, 0)
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_2r617")
+
+[node name="AttackableBodyHealthbar" parent="ShipPart3/HpBar" instance=ExtResource("13_1um6f")]
+health_entity_path = NodePath("../..")
+hide_on_full_hp = true
+
 [node name="ShipPart4" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 5.0953465, -0.4, 10.196731)
 script = ExtResource("2_vlt18")
+max_hp = 10
 
 [node name="AttackableBody" type="Area3D" parent="ShipPart4"]
 script = ExtResource("15_3xbsa")
@@ -379,9 +450,20 @@ transform = Transform3D(-4.371139e-08, 0, -0.9999999, 0, 1, 0, 0.9999999, 0, -4.
 material_override = SubResource("StandardMaterial3D_a0fk5")
 mesh = ExtResource("3_a0fk5")
 
+[node name="HpBar" type="Sprite3D" parent="ShipPart4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3131304, 0)
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_c4yja")
+
+[node name="AttackableBodyHealthbar" parent="ShipPart4/HpBar" instance=ExtResource("13_1um6f")]
+health_entity_path = NodePath("../..")
+hide_on_full_hp = true
+
 [node name="ShipPart5" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 5.0953465, -0.4, -1.1025839)
 script = ExtResource("2_vlt18")
+max_hp = 10
 
 [node name="AttackableBody" type="Area3D" parent="ShipPart5"]
 script = ExtResource("15_3xbsa")
@@ -403,9 +485,20 @@ transform = Transform3D(-4.371139e-08, 0, -0.9999999, 0, 1, 0, 0.9999999, 0, -4.
 material_override = SubResource("StandardMaterial3D_a0fk5")
 mesh = ExtResource("3_a0fk5")
 
+[node name="HpBar" type="Sprite3D" parent="ShipPart5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3131304, 0)
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_clyjn")
+
+[node name="AttackableBodyHealthbar" parent="ShipPart5/HpBar" instance=ExtResource("13_1um6f")]
+health_entity_path = NodePath("../..")
+hide_on_full_hp = true
+
 [node name="ShipPart6" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 5.0953465, -0.4, -12.360417)
 script = ExtResource("2_vlt18")
+max_hp = 10
 
 [node name="AttackableBody" type="Area3D" parent="ShipPart6"]
 script = ExtResource("15_3xbsa")
@@ -426,6 +519,16 @@ mesh = ExtResource("3_a0fk5")
 transform = Transform3D(-4.371139e-08, 0, -0.9999999, 0, 1, 0, 0.9999999, 0, -4.371139e-08, -0.04677868, 0.146, 0.27272892)
 material_override = SubResource("StandardMaterial3D_a0fk5")
 mesh = ExtResource("3_a0fk5")
+
+[node name="HpBar" type="Sprite3D" parent="ShipPart6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3131304, 0)
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_22w36")
+
+[node name="AttackableBodyHealthbar" parent="ShipPart6/HpBar" instance=ExtResource("13_1um6f")]
+health_entity_path = NodePath("../..")
+hide_on_full_hp = true
 
 [node name="Decorations" type="Node3D" parent="."]
 visible = false
