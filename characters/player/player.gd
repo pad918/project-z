@@ -213,7 +213,7 @@ func _find_repairable_ship_part():
 	for node in get_tree().get_nodes_in_group("ship_parts"):
 		if node is ShipPart:
 			var sp: ShipPart = node
-			if sp.get_is_broken():
+			if sp.get_is_damaged():
 				var d := global_transform.origin.distance_squared_to(sp.global_transform.origin)
 				if d <= repair_range * repair_range and d < nearest_dist_sq:
 					nearest = sp
