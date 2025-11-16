@@ -6,7 +6,7 @@ extends State
 
 var owner_body:CharacterBody3D:
 	get():
-		return owner_node as Player
+		return owner_node as CharacterBody3D
 
 var velocity:Vector3 = Vector3.ZERO
 
@@ -22,5 +22,4 @@ func state_process(delta:float):
 	if(time_since_start > dash_time):
 		try_set_state(next_state)
 	owner_body.velocity = velocity
-	print("Starting dash with speed: ", owner_body.velocity)
 	owner_body.move_and_slide()

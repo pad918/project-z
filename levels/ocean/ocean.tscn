@@ -202,12 +202,12 @@ metadata/_custom_type_script = "uid://6ix82m43o37x"
 [sub_resource type="Resource" id="Resource_ktyde"]
 script = ExtResource("8_h0sva")
 spawner_scene = ExtResource("9_j48uv")
-spawn_position = Vector3(14, 0, 20)
+spawn_position = Vector3(14, 0, -20)
 enemy_scene = ExtResource("6_h0sva")
 spawn_delay = 5.0
 max_enemies_spawned = 3
 max_spawn_time = 30.0
-position_randomness = Vector3(1, 0, 8)
+position_randomness = Vector3(1, 0, 2)
 spawn_delay_randomness = 1.0
 metadata/_custom_type_script = "uid://6ix82m43o37x"
 
@@ -401,7 +401,7 @@ metadata/_custom_type_script = "uid://6ix82m43o37x"
 [sub_resource type="Resource" id="Resource_sgdfv"]
 script = ExtResource("8_h0sva")
 spawner_scene = ExtResource("9_j48uv")
-spawn_position = Vector3(14, 0, 15)
+spawn_position = Vector3(14, 0, -20)
 enemy_scene = ExtResource("6_h0sva")
 spawn_delay = 10.0
 max_enemies_spawned = 3
@@ -736,3 +736,6 @@ show_percentage = false
 libraries = {
 &"": SubResource("AnimationLibrary_brtpy")
 }
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.208, 1.913, 28)
