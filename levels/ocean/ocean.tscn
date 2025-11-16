@@ -670,7 +670,6 @@ amount = 0.5
 
 [node name="Player" parent="." instance=ExtResource("5_kg4sb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 6.2733703, -2.8)
-repair_range = 6.25
 
 [node name="Tentacle" parent="." instance=ExtResource("6_h0sva")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.232464, 1.9178448, -9.907324)

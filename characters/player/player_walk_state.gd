@@ -12,6 +12,12 @@ extends State
 @export_category("Transisionts")
 @export var dash_state : State
 @export var jump_dash_state : State
+@export var attack_state : State
+@export var repair_state : State
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("repair"):
+		try_set_state(repair_state)
 
 var owner_body:Player:
 	get():
@@ -40,6 +46,9 @@ func state_process(delta:float):
 	if(Input.is_action_just_pressed("move_jump") && owner_body.is_on_floor()):
 		jump_dash_state.start_dash(Vector3.UP)
 		try_set_state(jump_dash_state)
+	
+	if(Input.is_action_just_pressed("player_attack")):
+		try_set_state(attack_state)
 	
 	direction = direction.normalized()
 	var is_moving = direction != Vector3.ZERO

@@ -18,8 +18,9 @@ var owner_node:Node2D:
 var curr_state: State :
 	set(new_state):
 		assert(new_state is State)
+		var old_state:State = curr_state
 		curr_state = new_state
-		curr_state.enter_state.emit()
+		curr_state.enter_state.emit(old_state)
 	get: 
 		return curr_state
 

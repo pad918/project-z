@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dn0vni80x0405"]
+[gd_scene load_steps=22 format=3 uid="uid://dn0vni80x0405"]
 
 [ext_resource type="Script" uid="uid://djjlls6v0a3tt" path="res://characters/player/player.gd" id="1_xxgcw"]
 [ext_resource type="PackedScene" uid="uid://dsi3kjg0rfxxo" path="res://characters/player/player_slash.tscn" id="2_5dc8e"]
@@ -9,7 +9,9 @@
 [ext_resource type="Script" uid="uid://dovgvk3pgxvah" path="res://characters/player/player_walk_state.gd" id="4_rpf03"]
 [ext_resource type="PackedScene" uid="uid://fiv72rsrl2om" path="res://utils/combat/healthbar.tscn" id="5_ixbpm"]
 [ext_resource type="Script" uid="uid://n3biikgh4tm5" path="res://characters/player/dash_state.gd" id="5_x5dtk"]
+[ext_resource type="Script" uid="uid://b6g5v7s61aus4" path="res://characters/player/player_attack_state.gd" id="6_3t07l"]
 [ext_resource type="AudioStream" uid="uid://bebdlxolwanas" path="res://assets/sounds/piratesgame.mp3" id="7_dirf7"]
+[ext_resource type="Script" uid="uid://b6rtt8b0hmp8g" path="res://characters/player/player_repair_state.gd" id="7_on558"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_508ok"]
 size = Vector3(1.92041, 2.83291, 2.85197)
@@ -126,16 +128,17 @@ collision_layer = 2
 script = ExtResource("1_xxgcw")
 dash_cooldown = 0.5
 attack_scene = ExtResource("2_5dc8e")
-attack_delay = 0.6
 
 [node name="MovementStateMachine" type="Node" parent="."]
 script = ExtResource("3_idpv6")
 metadata/_custom_type_script = "uid://3nnvvh8kvbfo"
 
-[node name="WalkState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("dash_state", "jump_dash_state")]
+[node name="WalkState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("dash_state", "jump_dash_state", "attack_state", "repair_state")]
 script = ExtResource("4_rpf03")
 dash_state = NodePath("../DashState")
 jump_dash_state = NodePath("../JumpDashState")
+attack_state = NodePath("../AttackState")
+repair_state = NodePath("../RepairState")
 
 [node name="DashState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_x5dtk")
@@ -148,6 +151,13 @@ script = ExtResource("5_x5dtk")
 next_state = NodePath("../WalkState")
 dash_time = 0.1
 dash_speed = 15.0
+
+[node name="AttackState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("player_animator")]
+script = ExtResource("6_3t07l")
+player_animator = NodePath("../../PlayerAnimator")
+
+[node name="RepairState" type="Node" parent="MovementStateMachine"]
+script = ExtResource("7_on558")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0162945, 0.00325489, -0.013339)
