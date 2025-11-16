@@ -2,7 +2,7 @@ extends State
 
 var prev_state : State
 
-# Avoid that it exists the same frame it enters
+# Avoid that it exits the same frame it enters
 var time_since_active := 0.0
 
 var ship: ShipMovement = null

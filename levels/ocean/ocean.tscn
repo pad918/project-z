@@ -1,7 +1,8 @@
-[gd_scene load_steps=36 format=3 uid="uid://gcbxrkjmsvos"]
+[gd_scene load_steps=37 format=3 uid="uid://gcbxrkjmsvos"]
 
 [ext_resource type="Material" uid="uid://ddo1g7x44rq1h" path="res://shaders/water.tres" id="1_j25bp"]
 [ext_resource type="Script" uid="uid://bw7bj23lrc64y" path="res://utils/rock/rockspawner.gd" id="2_d6hyc"]
+[ext_resource type="Script" uid="uid://8ga58ifu56ij" path="res://utils/other/enhanced_remote_transform3d.gd" id="2_j48uv"]
 [ext_resource type="PackedScene" uid="uid://xqygc3dedr2h" path="res://models/ship/ship.tscn" id="4_8wseo"]
 [ext_resource type="Script" uid="uid://c08fouanews6e" path="res://utils/wave/wave.gd" id="4_wm15w"]
 [ext_resource type="PackedScene" uid="uid://dn0vni80x0405" path="res://characters/player/player.tscn" id="5_kg4sb"]
@@ -635,11 +636,18 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_jsk3o")
 
-[node name="water" type="MeshInstance3D" parent="."]
+[node name="WaterTransform" type="Node3D" parent="." node_paths=PackedStringArray("remote_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8040102, 0)
+script = ExtResource("2_j48uv")
+remote_node = NodePath("../Ship")
+copy_y = false
+
+[node name="water" type="MeshInstance3D" parent="WaterTransform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.62723637, 0)
 sorting_offset = -100.0
 material_override = ExtResource("1_j25bp")
 mesh = SubResource("PlaneMesh_i5arm")
+skeleton = NodePath("../..")
 
 [node name="Floor" type="Node3D" parent="."]
 
