@@ -21,7 +21,7 @@ func repair(amount : float = 1.0) -> void:
 		mesh_instance_3d.visible = true
 		hp = amount
 	else:
-		print("Repairing partually damaged part: ", name)
+		print("Repairing partially damaged part: ", name)
 		hp = min(max_hp, hp + amount)
 		
 func take_damage(source: DamageArea):

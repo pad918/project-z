@@ -2,9 +2,11 @@ extends Node3D
 
 class_name ShipMovement
 
+signal player_stoped_steering
+
 @export_category("Movement")
-@export var speed := Vector3.FORWARD*3.0
-@export var steering_speed := 0.2
+@export var speed := Vector3.FORWARD*6.0
+@export var steering_speed := 0.13
 @export var max_steering_angle := 1.0
 
 @export_category("Sway")
@@ -19,7 +21,9 @@ var timer := 0.0
 var curr_hit_velocity = Vector2.ZERO
 var curr_hit_sway = Vector2.ZERO
 
-var steering_angle := 0.5
+var steering_angle := 0.0
+
+var current_steering_player : Player = null
 
 func _ready():
 	# Set the desired noise type to Perlin
@@ -29,6 +33,10 @@ func _ready():
 	noise.seed = randi() # Change the random pattern
 	noise.frequency = 0.05 # Smaller value means smoother, larger features
 	noise.fractal_octaves = 5
+	player_stoped_steering.connect(
+		func():
+			current_steering_player = null
+	)
 
 func hit(hit_dir:Vector2):
 	curr_hit_velocity += hit_dir
@@ -38,10 +46,12 @@ func get_wave_sway() -> Vector3:
 	return rot
 	
 func turn(steer_amount : float):
-	if(amount<0):
-		steering_angle = max(-max_steering_angle, steering_angle-steer_amount)
-	else:
-		steering_angle = min(max_steering_angle, steering_angle+steer_amount)
+	steering_angle = max(-max_steering_angle, steering_angle+steer_amount)
+
+func set_player_steering(player:Player):
+	if(current_steering_player == null):
+		player.start_steering_ship(self)
+		current_steering_player = player
 
 # Returns the sway caused by being hit 
 func get_hit_sway(delta:float) -> Vector3:

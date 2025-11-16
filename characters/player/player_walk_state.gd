@@ -53,12 +53,9 @@ func state_process(delta:float):
 	if(Input.is_action_just_pressed("player_attack")):
 		try_set_state(attack_state)
 	
-	
-	var is_moving = direction != Vector3.ZERO
 	owner_body.velocity.x = direction.x * move_speed
 	owner_body.velocity.z = direction.z * move_speed
 	
 	apply_gravity(delta)
 	
 	owner_body.move_and_slide()
-	pass

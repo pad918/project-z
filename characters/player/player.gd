@@ -7,6 +7,9 @@ class_name Player
 @onready var attackable_body: AttackableBody = $AttackableBody
 @onready var player_animator: AnimationPlayer = $PlayerAnimator
 
+@onready var steer_ship_state: State = $MovementStateMachine/SteerShipState
+
+
 var camera_offset: Vector3 = Vector3.ZERO
 var base_camera_offset: Vector3 = Vector3.ZERO
 
@@ -23,6 +26,9 @@ var hp : float
 # (heavy weapons in e.g. elden ring)
 func spawn_damage_area():
 	add_child(attack_scene.instantiate())
+
+func start_steering_ship(ship:ShipMovement):
+	steer_ship_state.start_steering(ship)
 
 func _unhandled_input(event: InputEvent) -> void:
 	#if event.is_action_pressed("exit"):
