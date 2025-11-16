@@ -38,6 +38,9 @@ func state_process(delta:float):
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1
 	
+	direction = direction.normalized()
+	direction = direction.rotated(Vector3.UP, owner_body.global_rotation.y)
+	
 	if(Input.is_action_just_pressed("move_dash") && owner_body.is_on_floor()):
 		dash_state.start_dash(direction)
 		try_set_state(dash_state)
@@ -50,7 +53,7 @@ func state_process(delta:float):
 	if(Input.is_action_just_pressed("player_attack")):
 		try_set_state(attack_state)
 	
-	direction = direction.normalized()
+	
 	var is_moving = direction != Vector3.ZERO
 	owner_body.velocity.x = direction.x * move_speed
 	owner_body.velocity.z = direction.z * move_speed

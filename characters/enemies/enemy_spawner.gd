@@ -63,6 +63,6 @@ func spawn_enemy():
 		)
 	pos *= 2.0 * position_randomness
 	get_parent().add_child(instance)
-	instance.global_position = pos + self.global_position
+	instance.global_position = pos.rotated(Vector3.UP, global_rotation.y) + self.global_position
 	enemies_spawned += 1
 	print("Spawned ", instance.name, " at: ", instance.global_position)

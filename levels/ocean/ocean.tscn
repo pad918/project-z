@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://xqygc3dedr2h" path="res://models/ship/ship.tscn" id="4_8wseo"]
 [ext_resource type="Script" uid="uid://c08fouanews6e" path="res://utils/wave/wave.gd" id="4_wm15w"]
 [ext_resource type="PackedScene" uid="uid://dn0vni80x0405" path="res://characters/player/player.tscn" id="5_kg4sb"]
-[ext_resource type="Script" uid="uid://bw3du25q58dly" path="res://models/ship/ship_swaying.gd" id="5_rm0u8"]
+[ext_resource type="Script" uid="uid://bw3du25q58dly" path="res://models/ship/ship_movement.gd" id="5_rm0u8"]
 [ext_resource type="Script" uid="uid://b1apnxdiwlw6l" path="res://utils/enemy_waves/enemy_wave_handler.gd" id="6_cwn0e"]
 [ext_resource type="PackedScene" uid="uid://6qjfsaowjrd1" path="res://characters/enemies/tentacle/tentacle.tscn" id="6_h0sva"]
 [ext_resource type="PackedScene" uid="uid://bpekosltikvao" path="res://characters/enemies/crab/crab.tscn" id="7_rm0u8"]
@@ -98,7 +98,7 @@ metadata/_custom_type_script = "uid://6ix82m43o37x"
 [sub_resource type="Resource" id="Resource_q8c4k"]
 script = ExtResource("12_j48uv")
 enemy_scene = ExtResource("6_h0sva")
-spawn_position = Vector3(13, 0, -20)
+spawn_position = Vector3(17, 0, -20)
 metadata/_custom_type_script = "uid://ddpvgd2jdi17n"
 
 [sub_resource type="Animation" id="Animation_ju2js"]
@@ -107,7 +107,7 @@ length = 25.0
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("WaveEventHandler")
+tracks/0/path = NodePath("Ship/WaveEventHandler")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -202,7 +202,7 @@ metadata/_custom_type_script = "uid://6ix82m43o37x"
 [sub_resource type="Resource" id="Resource_ktyde"]
 script = ExtResource("8_h0sva")
 spawner_scene = ExtResource("9_j48uv")
-spawn_position = Vector3(14, 0, -20)
+spawn_position = Vector3(18, 0, -20)
 enemy_scene = ExtResource("6_h0sva")
 spawn_delay = 5.0
 max_enemies_spawned = 3
@@ -217,7 +217,7 @@ length = 30.0
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("WaveEventHandler")
+tracks/0/path = NodePath("Ship/WaveEventHandler")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -312,7 +312,7 @@ length = 35.0
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("WaveEventHandler")
+tracks/0/path = NodePath("Ship/WaveEventHandler")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -416,7 +416,7 @@ length = 40.0
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("WaveEventHandler")
+tracks/0/path = NodePath("Ship/WaveEventHandler")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -502,7 +502,7 @@ length = 40.0
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("WaveEventHandler")
+tracks/0/path = NodePath("Ship/WaveEventHandler")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -668,21 +668,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3.37009, -3)
 script = ExtResource("5_rm0u8")
 amount = 0.5
 
-[node name="Player" parent="." instance=ExtResource("5_kg4sb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 6.2733703, -2.8)
-
-[node name="Tentacle" parent="." instance=ExtResource("6_h0sva")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.232464, 1.9178448, -9.907324)
-
-[node name="WaveEventHandler" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.061429, 1.9044485, 21.356426)
+[node name="WaveEventHandler" type="Node3D" parent="Ship"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.061429024, -1.4656415, 24.356426)
 script = ExtResource("6_cwn0e")
 
-[node name="WaveAnimator" type="AnimationPlayer" parent="WaveEventHandler"]
-root_node = NodePath("../..")
+[node name="WaveAnimator" type="AnimationPlayer" parent="Ship/WaveEventHandler"]
+root_node = NodePath("../../..")
 libraries = {
 &"": SubResource("AnimationLibrary_tq3bg")
 }
+
+[node name="Player" parent="Ship" instance=ExtResource("5_kg4sb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9032803, 0.20000005)
 
 [node name="WaveStats" type="CanvasLayer" parent="."]
 

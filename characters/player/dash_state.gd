@@ -15,6 +15,7 @@ var time_since_start:float = 0
 func start_dash(direction:Vector3):
 	time_since_start = 0
 	velocity = direction.normalized() * dash_speed + owner_body.velocity
+	velocity = velocity
 	
 
 func state_process(delta:float):
