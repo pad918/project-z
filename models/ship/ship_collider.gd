@@ -7,5 +7,4 @@ var ship:ShipSwaing :
 		return get_parent().get_parent()
 		
 func push_ship(vel):
-	print("Pushing ship: ", vel)
 	ship.hit(vel)

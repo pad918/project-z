@@ -86,6 +86,7 @@ func _ready():
 	
 
 func _physics_process(delta: float) -> void:
+	return # Remove all movement code for now
 	var direction = Vector3.ZERO
 	if Input.is_action_pressed("move_forward"):
 		direction.z -= 1

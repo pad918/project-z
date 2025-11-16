@@ -12,7 +12,6 @@ func _ready() -> void:
 	for c in get_children():
 		if(c is ChainPart):
 			parts.append(c)
-	print("parts: ", parts.size())
 
 func set_targets():
 	#print("PART SIZES: ", parts.size())
