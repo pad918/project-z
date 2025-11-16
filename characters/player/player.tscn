@@ -1,12 +1,17 @@
-[gd_scene load_steps=17 format=3 uid="uid://dn0vni80x0405"]
+[gd_scene load_steps=22 format=3 uid="uid://dn0vni80x0405"]
 
 [ext_resource type="Script" uid="uid://djjlls6v0a3tt" path="res://characters/player/player.gd" id="1_xxgcw"]
 [ext_resource type="PackedScene" uid="uid://dsi3kjg0rfxxo" path="res://characters/player/player_slash.tscn" id="2_5dc8e"]
 [ext_resource type="SpineSkeletonDataResource" uid="uid://cu7u6543fxho2" path="res://characters/spine/spine.tres" id="3_c6leb"]
 [ext_resource type="Script" uid="uid://p5f5bttudgf6" path="res://utils/combat/attackable_body.gd" id="3_exd8k"]
+[ext_resource type="Script" uid="uid://3nnvvh8kvbfo" path="res://utils/state/state_machine.gd" id="3_idpv6"]
 [ext_resource type="Script" uid="uid://0v1xexlkb3ai" path="res://characters/spine/spine_sprite.gd" id="4_dirf7"]
+[ext_resource type="Script" uid="uid://dovgvk3pgxvah" path="res://characters/player/player_walk_state.gd" id="4_rpf03"]
 [ext_resource type="PackedScene" uid="uid://fiv72rsrl2om" path="res://utils/combat/healthbar.tscn" id="5_ixbpm"]
+[ext_resource type="Script" uid="uid://n3biikgh4tm5" path="res://characters/player/dash_state.gd" id="5_x5dtk"]
+[ext_resource type="Script" uid="uid://b6g5v7s61aus4" path="res://characters/player/player_attack_state.gd" id="6_3t07l"]
 [ext_resource type="AudioStream" uid="uid://bebdlxolwanas" path="res://assets/sounds/piratesgame.mp3" id="7_dirf7"]
+[ext_resource type="Script" uid="uid://b6rtt8b0hmp8g" path="res://characters/player/player_repair_state.gd" id="7_on558"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_508ok"]
 size = Vector3(1.92041, 2.83291, 2.85197)
@@ -20,6 +25,24 @@ viewport_path = NodePath("AttackableBodyHealthbar")
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5dc8e"]
 radius = 0.82373047
 height = 2.9016113
+
+[sub_resource type="Animation" id="Animation_idpv6"]
+resource_name = "player_dance"
+length = 0.2
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RotationOffset/SpineModel/SubViewport/SpineSprite")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["1 front - dance", true],
+"method": &"play_animation"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_dirf7"]
 resource_name = "player_idle"
@@ -35,6 +58,24 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": ["1 front - idle", true],
+"method": &"play_animation"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_rpf03"]
+resource_name = "player_roll"
+length = 0.2
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RotationOffset/SpineModel/SubViewport/SpineSprite")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["1 front - roll", false],
 "method": &"play_animation"
 }]
 }
@@ -74,42 +115,6 @@ tracks/1/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_idpv6"]
-resource_name = "player_dance"
-length = 0.2
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("RotationOffset/SpineModel/SubViewport/SpineSprite")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": ["1 front - dance", true],
-"method": &"play_animation"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_rpf03"]
-resource_name = "player_roll"
-length = 0.2
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("RotationOffset/SpineModel/SubViewport/SpineSprite")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": ["1 front - roll", false],
-"method": &"play_animation"
-}]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dirf7"]
 _data = {
 &"player_dance": SubResource("Animation_idpv6"),
@@ -123,7 +128,36 @@ collision_layer = 2
 script = ExtResource("1_xxgcw")
 dash_cooldown = 0.5
 attack_scene = ExtResource("2_5dc8e")
-attack_delay = 0.6
+
+[node name="MovementStateMachine" type="Node" parent="."]
+script = ExtResource("3_idpv6")
+metadata/_custom_type_script = "uid://3nnvvh8kvbfo"
+
+[node name="WalkState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("dash_state", "jump_dash_state", "attack_state", "repair_state")]
+script = ExtResource("4_rpf03")
+dash_state = NodePath("../DashState")
+jump_dash_state = NodePath("../JumpDashState")
+attack_state = NodePath("../AttackState")
+repair_state = NodePath("../RepairState")
+
+[node name="DashState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_x5dtk")
+next_state = NodePath("../WalkState")
+dash_time = 0.1
+dash_speed = 30.0
+
+[node name="JumpDashState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_x5dtk")
+next_state = NodePath("../WalkState")
+dash_time = 0.1
+dash_speed = 15.0
+
+[node name="AttackState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("player_animator")]
+script = ExtResource("6_3t07l")
+player_animator = NodePath("../../PlayerAnimator")
+
+[node name="RepairState" type="Node" parent="MovementStateMachine"]
+script = ExtResource("7_on558")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0162945, 0.00325489, -0.013339)

@@ -47,7 +47,7 @@ func jump():
 # Charge up and jump towards the players location
 func _ready() -> void:
 	enter_state.connect(
-		func():
+		func(_prev:State):
 			attack_charge_animator.play("attack")
 			body.velocity = Vector3.ZERO
 	)

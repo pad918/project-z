@@ -62,6 +62,6 @@ func spawn_enemy():
 		rng.randf_range(-1, 1),
 		)
 	pos *= 2.0 * position_randomness
-	instance.position = pos
-	add_child(instance) #get_parent().
+	get_parent().add_child(instance)
+	instance.global_position = pos + get_parent().global_position
 	enemies_spawned += 1

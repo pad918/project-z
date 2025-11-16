@@ -1,6 +1,6 @@
 class_name ShipPart extends Node3D
 
-@export var max_hp := 1
+@export var max_hp := 1.0
 @onready var mesh_instance_3d: MeshInstance3D = $PlankType1
 
 var hp: float
@@ -15,14 +15,14 @@ func _ready() -> void:
 func _on_on_break() -> void:
 	mesh_instance_3d.visible = false
 
-func repair() -> void:
+func repair(amount : float = 1.0) -> void:
 	if _is_broken:
 		print("repairing broken ship part: ", name)
 		mesh_instance_3d.visible = true
-		hp = 1
+		hp = amount
 	else:
 		print("Repairing partually damaged part: ", name)
-		hp = min(max_hp, hp + 1)
+		hp = min(max_hp, hp + amount)
 		
 func take_damage(source: DamageArea):
 	hp -= source.base_damage

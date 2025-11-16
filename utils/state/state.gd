@@ -2,11 +2,15 @@ extends Node
 
 class_name State
 
-signal enter_state
+signal enter_state(source:State)
 
 var state_machine: StateMachine :
 	get:
 		return get_parent()
+
+var owner_node:
+	get():
+		return state_machine.owner_node
 
 var is_active_state: bool :
 	get:
