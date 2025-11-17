@@ -15,13 +15,13 @@ func _ready() -> void:
 func _on_on_break() -> void:
 	mesh_instance_3d.visible = false
 
-func repair(amount : float = 1.0) -> void:
+func repair(amount : float = 100.0) -> void:
 	if _is_broken:
 		print("repairing broken ship part: ", name)
 		mesh_instance_3d.visible = true
-		hp = amount
+		hp = min(max_hp, amount)
 	else:
-		print("Repairing partually damaged part: ", name)
+		print("Repairing partially damaged part: ", name)
 		hp = min(max_hp, hp + amount)
 		
 func take_damage(source: DamageArea):

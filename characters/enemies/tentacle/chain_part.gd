@@ -18,10 +18,10 @@ func _hit_body(body):
 		body.push_ship(Vector2(0.0, -0.03))
 
 func step(delta: float):
-	var local_rot:float = self.global_rotation.z 
+	var local_rot:float = self.rotation.z 
 	var error:float = target_rotation - local_rot
 	var pid_signal = pid.step(error, delta)
-	apply_torque(Vector3(0,0, pid_signal*strength))
+	apply_torque(Vector3(0,0, pid_signal*strength).rotated(Vector3.UP, global_rotation.y))
 
 func _physics_process(delta: float) -> void:
 	if(_is_torque_on):

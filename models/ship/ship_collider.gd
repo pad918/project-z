@@ -2,7 +2,7 @@ extends StaticBody3D
 
 class_name ShipCollider
 
-var ship:ShipSwaing :
+var ship:ShipMovement :
 	get():
 		return get_parent().get_parent()
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dn0vni80x0405"]
+[gd_scene load_steps=26 format=3 uid="uid://dn0vni80x0405"]
 
 [ext_resource type="Script" uid="uid://djjlls6v0a3tt" path="res://characters/player/player.gd" id="1_xxgcw"]
 [ext_resource type="PackedScene" uid="uid://dsi3kjg0rfxxo" path="res://characters/player/player_slash.tscn" id="2_5dc8e"]
@@ -12,6 +12,9 @@
 [ext_resource type="Script" uid="uid://b6g5v7s61aus4" path="res://characters/player/player_attack_state.gd" id="6_3t07l"]
 [ext_resource type="AudioStream" uid="uid://bebdlxolwanas" path="res://assets/sounds/piratesgame.mp3" id="7_dirf7"]
 [ext_resource type="Script" uid="uid://b6rtt8b0hmp8g" path="res://characters/player/player_repair_state.gd" id="7_on558"]
+[ext_resource type="Script" uid="uid://g8xu81i6uqpo" path="res://characters/player/steer_ship_state.gd" id="8_58jvb"]
+[ext_resource type="Script" uid="uid://bmw1jlogwe43d" path="res://characters/player/fix_rotation.gd" id="10_gqopd"]
+[ext_resource type="Script" uid="uid://b4axxyrt0iwob" path="res://utils/interaction/interactor.gd" id="14_icpky"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_508ok"]
 size = Vector3(1.92041, 2.83291, 2.85197)
@@ -123,10 +126,13 @@ _data = {
 &"player_slash": SubResource("Animation_c6leb")
 }
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gqopd"]
+radius = 1.2060547
+height = 2.4121094
+
 [node name="Player" type="CharacterBody3D" groups=["players"]]
 collision_layer = 2
 script = ExtResource("1_xxgcw")
-dash_cooldown = 0.5
 attack_scene = ExtResource("2_5dc8e")
 
 [node name="MovementStateMachine" type="Node" parent="."]
@@ -159,6 +165,9 @@ player_animator = NodePath("../../PlayerAnimator")
 [node name="RepairState" type="Node" parent="MovementStateMachine"]
 script = ExtResource("7_on558")
 
+[node name="SteerShipState" type="Node" parent="MovementStateMachine"]
+script = ExtResource("8_58jvb")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0162945, 0.00325489, -0.013339)
 shape = SubResource("BoxShape3D_508ok")
@@ -187,9 +196,11 @@ scale = Vector2(0.54, 0.54)
 script = ExtResource("4_dirf7")
 
 [node name="Camera3D" type="Camera3D" parent="RotationOffset/SpineModel"]
-transform = Transform3D(2.197802, 0, 0, 0, 1.8003342, 1.2606075, 0, -1.2606075, 1.8003342, 0, 20.16972, 28.805347)
+transform = Transform3D(2.197802, 0, 0, 0, 1.9753716, 0.9634531, 0, -0.9634531, 1.9753716, 0, 12.91, 28.805)
 fov = 50.0
 size = 14.0
+script = ExtResource("10_gqopd")
+lock_y_rot = false
 
 [node name="Healthbar" type="Sprite3D" parent="RotationOffset/SpineModel"]
 transform = Transform3D(2.197802, 0, 0, 0, 1.800334, 1.2606074, 0, -1.2606074, 1.800334, 0, 4.328825, 0.7632888)
@@ -221,3 +232,10 @@ stream = ExtResource("7_dirf7")
 volume_db = -24.542
 autoplay = true
 parameters/looping = true
+
+[node name="InteractorArea" type="Area3D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("14_icpky")
+player = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractorArea"]
+shape = SubResource("CapsuleShape3D_gqopd")
