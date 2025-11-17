@@ -30,8 +30,9 @@ func get_chunk_at(pos: Vector2i) -> Chunk:
 
 func generate_chunk(pos:Vector2i):
 	var chunk : Chunk = get_chunk_at(pos)
-	if(chunk):
+	if(chunk != null):
 		return
+	print("GENERATING CHUNK: ", pos)
 	chunk = Chunk.new()
 	chunk.pos = pos
 	rng.seed = hash(pos)
@@ -40,8 +41,8 @@ func generate_chunk(pos:Vector2i):
 		var obj : Node3D = rock_instance.instantiate()
 		add_child(obj)
 		obj.global_position = Vector3(chunk_size * pos.x, 0.0, chunk_size*pos.y) + Vector3(rng.randf_range(0, chunk_size), 0.0, rng.randf_range(0, chunk_size))
-		print("GENERATED ROCK AT: ", obj.global_position)
 		chunk.objects.append(obj)
+	chunks.append(chunk)
 		
 	
 func update_loaded_chunks():

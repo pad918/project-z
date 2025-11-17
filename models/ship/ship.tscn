@@ -243,7 +243,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01928711, 2.2164001, -0.139
 shape = SubResource("BoxShape3D_wu6fv")
 
 [node name="Wheel" type="StaticBody3D" parent="NavigationRegion"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9.718244)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.5028067)
 script = ExtResource("1_557hb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion/Wheel"]

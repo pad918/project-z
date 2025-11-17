@@ -668,7 +668,7 @@ spawn_on_ready = true
 
 [node name="HittableRockSpawner" type="Node3D" parent="Floor" node_paths=PackedStringArray("target")]
 script = ExtResource("4_brtpy")
-base_spawn_density = 0.25
+base_spawn_density = 0.4
 chunk_size = 64
 generation_dist = 6
 target = NodePath("../../Ship/Player")

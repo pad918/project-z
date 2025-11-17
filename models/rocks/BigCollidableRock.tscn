@@ -55,9 +55,9 @@ skeleton = NodePath("")
 
 [node name="DamageArea" type="Area3D" parent="."]
 script = ExtResource("1_sy2tt")
-base_damage = 10.0
-base_knockback = 5.0
+base_damage = 4.0
 attackable_groups = Array[String](["ship_parts"])
+hit_max_one_per_frame = true
 metadata/_custom_type_script = "uid://dshalxabrsdqb"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DamageArea"]

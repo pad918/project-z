@@ -17,6 +17,7 @@ texture = ExtResource("1_hjkvu")
 
 [node name="DamageArea" type="Area3D" parent="."]
 script = ExtResource("3_wefx7")
+base_knockback = 0.2
 attackable_groups = Array[String](["ship_parts"])
 metadata/_custom_type_script = "uid://dshalxabrsdqb"
 
