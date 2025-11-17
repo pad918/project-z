@@ -1,11 +1,13 @@
-[gd_scene load_steps=37 format=3 uid="uid://gcbxrkjmsvos"]
+[gd_scene load_steps=39 format=3 uid="uid://gcbxrkjmsvos"]
 
 [ext_resource type="Material" uid="uid://ddo1g7x44rq1h" path="res://shaders/water.tres" id="1_j25bp"]
 [ext_resource type="Script" uid="uid://bw7bj23lrc64y" path="res://utils/rock/rockspawner.gd" id="2_d6hyc"]
 [ext_resource type="Script" uid="uid://8ga58ifu56ij" path="res://utils/other/enhanced_remote_transform3d.gd" id="2_j48uv"]
 [ext_resource type="PackedScene" uid="uid://xqygc3dedr2h" path="res://models/ship/ship.tscn" id="4_8wseo"]
+[ext_resource type="Script" uid="uid://snt5g40k81nq" path="res://models/rocks/hittable_rock_spawner.gd" id="4_brtpy"]
 [ext_resource type="Script" uid="uid://c08fouanews6e" path="res://utils/wave/wave.gd" id="4_wm15w"]
 [ext_resource type="PackedScene" uid="uid://dn0vni80x0405" path="res://characters/player/player.tscn" id="5_kg4sb"]
+[ext_resource type="PackedScene" uid="uid://dt1neprxs2jmf" path="res://models/rocks/BigCollidableRock.tscn" id="5_q8c4k"]
 [ext_resource type="Script" uid="uid://b1apnxdiwlw6l" path="res://utils/enemy_waves/enemy_wave_handler.gd" id="6_cwn0e"]
 [ext_resource type="PackedScene" uid="uid://6qjfsaowjrd1" path="res://characters/enemies/tentacle/tentacle.tscn" id="6_h0sva"]
 [ext_resource type="PackedScene" uid="uid://bpekosltikvao" path="res://characters/enemies/crab/crab.tscn" id="7_rm0u8"]
@@ -657,11 +659,20 @@ size = Vector3(500, 1, 500)
 
 [node name="Rocks" type="MultiMeshInstance3D" parent="Floor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.06408, 0)
+visible = false
 script = ExtResource("2_d6hyc")
 spawn_count = 3000
 area_size = Vector2(500, 500)
 rock_scene_path = "uid://cdiug2preeho5"
 spawn_on_ready = true
+
+[node name="HittableRockSpawner" type="Node3D" parent="Floor" node_paths=PackedStringArray("target")]
+script = ExtResource("4_brtpy")
+base_spawn_density = 0.25
+chunk_size = 64
+generation_dist = 6
+target = NodePath("../../Ship/Player")
+rock_instance = ExtResource("5_q8c4k")
 
 [node name="WaterWaveManager" type="Node" parent="."]
 script = ExtResource("4_wm15w")

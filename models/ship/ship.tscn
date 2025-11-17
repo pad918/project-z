@@ -337,6 +337,7 @@ shape = SubResource("BoxShape3D_evq1r")
 [node name="ShipPart1" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -6.25, -0.4, -12.466971)
 script = ExtResource("2_vlt18")
+max_hp = 10.0
 
 [node name="HpBar" type="Sprite3D" parent="ShipPart1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3131304, 0)
@@ -371,6 +372,7 @@ shape = SubResource("BoxShape3D_3xbsa")
 [node name="ShipPart2" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -6.25, -0.4, -1.1781883)
 script = ExtResource("2_vlt18")
+max_hp = 10.0
 
 [node name="AttackableBody" type="Area3D" parent="ShipPart2"]
 script = ExtResource("15_3xbsa")
@@ -405,6 +407,7 @@ hide_on_full_hp = true
 [node name="ShipPart3" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -6.25, -0.4, 10.196731)
 script = ExtResource("2_vlt18")
+max_hp = 10.0
 
 [node name="AttackableBody" type="Area3D" parent="ShipPart3"]
 script = ExtResource("15_3xbsa")
@@ -439,6 +442,7 @@ hide_on_full_hp = true
 [node name="ShipPart4" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 5.0953465, -0.4, 10.196731)
 script = ExtResource("2_vlt18")
+max_hp = 10.0
 
 [node name="AttackableBody" type="Area3D" parent="ShipPart4"]
 script = ExtResource("15_3xbsa")
@@ -473,6 +477,7 @@ hide_on_full_hp = true
 [node name="ShipPart5" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 5.0953465, -0.4, -1.1025839)
 script = ExtResource("2_vlt18")
+max_hp = 10.0
 
 [node name="AttackableBody" type="Area3D" parent="ShipPart5"]
 script = ExtResource("15_3xbsa")
@@ -507,6 +512,7 @@ hide_on_full_hp = true
 [node name="ShipPart6" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 5.0953465, -0.4, -12.360417)
 script = ExtResource("2_vlt18")
+max_hp = 10.0
 
 [node name="AttackableBody" type="Area3D" parent="ShipPart6"]
 script = ExtResource("15_3xbsa")
